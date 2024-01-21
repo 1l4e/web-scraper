@@ -1,4 +1,8 @@
+# web-scraper
+This repository contains a simple web scraper built with SvelteKit for educational purposes. It demonstrates the use of SvelteKit, Axios for making HTTP requests, and Svelte Sonner for displaying toast messages. The project is intended for learning and exploring web scraping concepts using SvelteKit.
+
 # create-svelte
+
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
 
