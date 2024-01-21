@@ -3,7 +3,14 @@
 	import SideBar from '$lib/components/sideBar.svelte';
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
+	import { navigating } from '$app/stores';
+	import NProgress from 'nprogress';
 
+	import 'nprogress/nprogress.css';
+
+	NProgress.configure({
+		minimum: 0.16
+	});
 	const menu = [
 		{ id: 1, name: 'Home', slug: '/' },
 		{
@@ -22,7 +29,14 @@
 
 	export let data: any;
 	let sources = data.sources;
-	// console.log(data);
+	$: {
+		if ($navigating) {
+			NProgress.start();
+		}
+		if (!$navigating) {
+			NProgress.done();
+		}
+	}
 </script>
 
 <div class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative">

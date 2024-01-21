@@ -12,6 +12,9 @@ declare global {
 		interface Locals {
 			auth: import("lucia").AuthRequest;
 		}
+		interface PageState {
+			selected: any
+		}
 	}
 }
 

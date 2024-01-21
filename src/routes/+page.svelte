@@ -1,6 +1,20 @@
 <script lang="ts">
 	import { hexUrl } from '$lib/util';
+	// import { goto, preloadData, pushState } from '$app/navigation';
+	// import { page } from '$app/stores';
+	// import ParentPage from './parent/+page.svelte';
 	export let data: any;
+	// async function handleClick(e: any) {
+	// 	if (e.metaKey || innerWidth < 640) return;
+	// 	e.preventDefault();
+	// 	const { href } = e.currentTarget;
+	// 	const result = await preloadData(href);
+	// 	if (result.type === 'loaded' && result.status === 200) {
+	// 		pushState(href, { selected: result.data });
+	// 	} else {
+	// 		goto(href);
+	// 	}
+	// }
 </script>
 
 <div class="flex w-full justify-center items-center flex-col gap-6">
@@ -43,3 +57,10 @@
 		{/each}
 	</div>
 </div>
+<!-- {#if $page.state.selected} -->
+<!-- 	<div class="flex absolute top-0 left-0 w-screen h-screen justify-center items-center bg-black/80"> -->
+<!-- 		<div class="flex flex-col bg-black"> -->
+<!-- 			<ParentPage data={$page.state.selected} /> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- {/if} -->

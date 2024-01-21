@@ -37,16 +37,12 @@ export const getParent = async (sourceId: string, id: string) => {
 	})
 	if (!source) return null
 
-	// const options = {
-	// 	path: hexToString(id)
-	// }
-
 	const obj: any = source.scraper.data;
 	const scraper = objectExtract(obj);
 	const data = scraper.parent;
 	const url = source.url + hexToString(id)
 	const res = await scrapeData(url, data)
-	return res
+	return { parent: res, sourceData: source }
 }
 
 export const getChild = async (sourceId: string, id: string) => {
