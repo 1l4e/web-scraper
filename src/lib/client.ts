@@ -66,3 +66,22 @@ export const getChild = async (sourceId: string, id: string) => {
 	const res = await scrapeData(url, data)
 	return { episode: res, sourceData: source }
 }
+
+export const getSearch = async (sourceId: string, keyword: string) => {
+	const source: any = await prisma.source.findFirst({
+		where: {
+			id: sourceId
+		},
+		include: {
+			scraper: true
+		}
+	})
+	if (!source) return { search: null }
+
+	const obj: any = source.scraper.data;
+	const scraper = objectExtract(obj);
+	const data = scraper.search;
+	const url = source.url + scraper?.search?.[1]?.selector?.replace('*', keyword)
+	const res = await scrapeData(url, data)
+	return { search: res }
+}

@@ -23,59 +23,61 @@
 	// };
 </script>
 
-{#if parent}
-	{#if episodeUrl}
-		<div class="flex w-full gap-6">
-			<div id="player" class="bg-white w-full h-[80vh] aspect-video relative flex shrink-0">
-				<iframe
-					title="video"
-					sandbox="allow-same-origin allow-scripts"
-					class="absolute top-0 left-0 w-full h-full"
-					src={episodeUrl}
-				></iframe>
-			</div>
-			<div class="flex flex-col gap-6"></div>
-		</div>
-	{/if}
-	<div class="flex flex-row w-full gap-6 px-4">
-		<div class="flex">
-			<img src={parent?.[0]?.image} alt={parent?.[0]?.title} />
-		</div>
-		<div class="flex flex-col gap-6">
-			<ul>
-				{#each Object.entries(parent[0]) as [key, value]}
-					<li class="text-xl">{key.toUpperCase()}: {value}</li>
-				{/each}
-			</ul>
-		</div>
-	</div>
-
-	<div class="flex flex-row w-full gap-6">
+<div data-portal="page">
+	{#if parent}
 		{#if episodeUrl}
-			<div class="flex justify-center">
-				<ul class="flex flex-row gap-6">
-					{#if parent && parent.length > 1}
-						{#each parent[1]?.server as server, i (i)}
-							<a
-								href={data.serverUrl + '&server=' + i}
-								class="relative cursor-pointer text-white bg-black flex justify-center items-center rounded-md"
-							>
-								<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
-								{server.title}
-							</a>
-						{/each}
-					{/if}
-				</ul>
+			<div class="flex w-full gap-6">
+				<div id="player" class="bg-white w-full h-[80vh] aspect-video relative flex shrink-0">
+					<iframe
+						title="video"
+						sandbox="allow-same-origin allow-scripts"
+						class="absolute top-0 left-0 w-full h-full"
+						src={episodeUrl}
+					></iframe>
+				</div>
+				<div class="flex flex-col gap-6"></div>
 			</div>
 		{/if}
-		<EpisodeList sourceId={data.sourceId} parent={parent[1]} />
-	</div>
-{/if}
+		<div class="flex flex-row w-full gap-6 px-4">
+			<div class="flex">
+				<img src={parent?.[0]?.image} alt={parent?.[0]?.title} />
+			</div>
+			<div class="flex flex-col gap-6">
+				<ul>
+					{#each Object.entries(parent[0]) as [key, value]}
+						<li class="text-xl">{key.toUpperCase()}: {value}</li>
+					{/each}
+				</ul>
+			</div>
+		</div>
 
-<!-- {#if $page.state.selected} -->
-<!-- 	<div class="flex fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/80"> -->
-<!-- 		<div class="flex flex-col bg-black"> -->
-<!-- 			<EpisodePage data={$page.state.selected} /> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- {/if} -->
+		<div class="flex flex-row w-full gap-6">
+			{#if episodeUrl}
+				<div class="flex justify-center">
+					<ul class="flex flex-row gap-6">
+						{#if parent && parent.length > 1}
+							{#each parent[1]?.server as server, i (i)}
+								<a
+									href={data.serverUrl + '&server=' + i}
+									class="relative cursor-pointer text-white bg-black flex justify-center items-center rounded-md"
+								>
+									<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
+									{server.title}
+								</a>
+							{/each}
+						{/if}
+					</ul>
+				</div>
+			{/if}
+			<EpisodeList sourceId={data.sourceId} parent={parent[1]} />
+		</div>
+	{/if}
+
+	<!-- {#if $page.state.selected} -->
+	<!-- 	<div class="flex fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/80"> -->
+	<!-- 		<div class="flex flex-col bg-black"> -->
+	<!-- 			<EpisodePage data={$page.state.selected} /> -->
+	<!-- 		</div> -->
+	<!-- 	</div> -->
+	<!-- {/if} -->
+</div>

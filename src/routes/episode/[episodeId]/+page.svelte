@@ -11,7 +11,6 @@
 	<div class="flex w-full gap-6">
 		<div id="player" class="bg-white w-full h-[80vh] aspect-video relative flex shrink-0">
 			{episodeUrl}
-			<!-- {@html playerContent} -->
 			<iframe
 				title="Video"
 				sandbox="allow-same-origin allow-scripts"
@@ -26,7 +25,7 @@
 		<h2 class="flex w-full h-full aspect-video">CANT LOAD VIDEO</h2>
 	</div>
 {/if}
-<div class="flex flex-row w-full gap-6">
+<div data-portal="page" class="flex flex-row w-full gap-6">
 	<div class="flex justify-center">
 		<ul class="flex flex-row gap-6">
 			{#if episode && episode.length > 0}

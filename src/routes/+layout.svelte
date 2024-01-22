@@ -7,6 +7,7 @@
 	import NProgress from 'nprogress';
 
 	import 'nprogress/nprogress.css';
+	import Portal from '$lib/components/portal.svelte';
 
 	NProgress.configure({
 		minimum: 0.16
@@ -44,10 +45,11 @@
 		{#if data?.userId}
 			<Header {menu} {data} />
 		{/if}
-		<div class="flex mx-auto w-full flex-col gap-6">
+		<div class="flex mx-auto w-full flex-col gap-6 pb-[140px]">
 			<slot />
 			<SideBar {sources} />
 		</div>
 	</div>
 </div>
 <Toaster position="top-center" richColors />
+<Portal />

@@ -29,7 +29,7 @@ export const hexToString = (hex: string) => {
 	return str;
 };
 
-export const defaultTypes = ['text', 'url', 'image', 'video', 'attributes', 'group', 'html']
+export const defaultTypes = ['text', 'url', 'image', 'video', 'attributes', 'group', 'html', 'none']
 
 export const defaultSelector2 = {
 	home: [

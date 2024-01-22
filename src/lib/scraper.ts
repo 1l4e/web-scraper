@@ -1,4 +1,3 @@
-import { objectExtract } from "$lib";
 import axios from "axios";
 import * as cheerio from 'cheerio'
 
@@ -57,8 +56,12 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 	else {
 		for (const sectionConfig of configObject) {
 			const selector = sectionConfig.selector
+			const type = sectionConfig.type
+			if (type === 'none') {
+				continue
+			}
 			const childrenObject = sectionConfig.children
-			$(selector).each((index, element) => {
+			$(selector).each((index: any, element: any) => {
 				const multiItem: any = {}
 				childrenObject?.forEach((child: any) => {
 					let value = ''
