@@ -1,11 +1,9 @@
 <script lang="ts">
 	import Card from '$lib/components/card.svelte';
-	import { hexUrl } from '$lib/util';
 	// import { goto, preloadData, pushState } from '$app/navigation';
 	// import { page } from '$app/stores';
 	// import ParentPage from './parent/+page.svelte';
 	export let data: any;
-	console.log(data);
 	// async function handleClick(e: any) {
 	// 	if (e.metaKey || innerWidth < 640) return;
 	// 	e.preventDefault();

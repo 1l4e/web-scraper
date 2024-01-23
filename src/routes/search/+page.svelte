@@ -15,6 +15,7 @@
 									title={child.title}
 									image={child.image}
 									link={child.link}
+									status={child.status}
 									description={''}
 									source={data.sourceId}
 								/>
@@ -26,4 +27,3 @@
 		</div>
 	</div>
 </div>
-
