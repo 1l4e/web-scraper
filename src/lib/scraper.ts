@@ -1,17 +1,45 @@
 import axios from "axios";
 import * as cheerio from 'cheerio'
+import prisma from "./server/prisma";
 
 
-export async function scrapeData(url: string, configObject: any) {
+export async function scrapeData(url: string, configObject: any, sourceId?: string) {
 	try {
 		const response = await axios.get(url);
 		const html = response.data;
+
 		const $ = cheerio.load(html);
 
+		const setCookieHeaders = response.headers["set-cookie"]
+		const cookies = setCookieHeaders?.map(cookie => cookie.split(';')[0]);
+		let csrfSection: any = {}
+		let csrf = ''
+		configObject.forEach((child: any) => {
+			if (child.name === 'csrf') {
+				csrfSection = child
+			}
+		})
+		if (csrfSection) {
+			csrf = $(csrfSection.selector).attr(csrfSection?.children?.[0]?.selector) || ""
+		}
+
+		if (sourceId) {
+			const data: any = {
+			}
+			cookies && (data.cookie = JSON.stringify(cookies))
+			csrf && (data.csrf = csrf)
+			await prisma.source.update({
+				where: {
+					id: sourceId
+				},
+				data
+			})
+		}
 		const scrapedData = scrapeSection(configObject, $);
 		return scrapedData;
 	} catch (error) {
 		console.error('Error scraping data:', error);
+		return []
 	}
 }
 function scrapeSection(configObject: any, $: any, childElement?: any, multi?: string) {
@@ -28,7 +56,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 				const type = child.type
 				const children = child.children
 				if (type === 'attributes') {
-					value = $(element).attr(selector)
+					value = $(element).attr(selector) || $(element).text();
 				}
 				if (type === 'html' || type === 'group') {
 					// value = "html"
@@ -55,7 +83,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 	}
 	else {
 		for (const sectionConfig of configObject) {
-			const selector = sectionConfig.selector
+			const selector = sectionConfig.selector.toString()
 			const type = sectionConfig.type
 			if (type === 'none') {
 				continue
@@ -69,7 +97,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 					const selector = child.selector
 					const type = child.type
 					if (type === 'attributes') {
-						value = $(element).attr('selector')
+						value = $(element).attr(selector)
 					}
 					const children = child.children
 					if (type === 'html' || type === 'group') {

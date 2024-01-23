@@ -9,18 +9,6 @@
 	if (servers && servers.length > 0) {
 		episodeUrl = servers[0];
 	}
-	// import EpisodePage from '../episode/[episodeId]/+page.svelte';
-	// const handleClick = async (e: any) => {
-	// 	if (e.metaKey || innerWidth < 640) return;
-	// 	e.preventDefault();
-	// 	const { href } = e.currentTarget;
-	// 	const result = await preloadData(href);
-	// 	if (result.type === 'loaded' && result.status === 200) {
-	// 		pushState(href, { selected: result.data });
-	// 	} else {
-	// 		goto(href);
-	// 	}
-	// };
 </script>
 
 <div data-portal="page">

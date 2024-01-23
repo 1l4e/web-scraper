@@ -14,7 +14,7 @@
 				class="portal-key absolute top-0 left=0 bg-black/50 w-full left-0 text-7xl text-white text-center"
 				>&nbsp;
 			</span>
-			<div class="flex flex-col bg-black">
+			<div class="flex flex-col bg-black/50">
 				<span class="w-full bg-slate-600/20 text-red-500 text-center">
 					{title}
 				</span>

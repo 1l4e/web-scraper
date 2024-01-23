@@ -55,6 +55,8 @@ model Source {
   active     Boolean @default(false)
   scraper    Scraper @relation(fields: [scraper_id], references: [id], onDelete: Cascade)
   scraper_id String
+  cookie     String?
+  csrf       String?
 }
 
 model Manga {

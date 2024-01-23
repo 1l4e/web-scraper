@@ -35,7 +35,6 @@
 			timeoutId = setTimeout(() => {
 				if (!keys) return;
 				search = false;
-				// console.log(keys, sourceId);
 				goto(`/search?keyword=${keys}&source=${sourceId}`);
 				keys = '';
 			}, 2000);

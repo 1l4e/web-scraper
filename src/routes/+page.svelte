@@ -5,6 +5,7 @@
 	// import { page } from '$app/stores';
 	// import ParentPage from './parent/+page.svelte';
 	export let data: any;
+	console.log(data);
 	// async function handleClick(e: any) {
 	// 	if (e.metaKey || innerWidth < 640) return;
 	// 	e.preventDefault();
@@ -33,7 +34,7 @@
 									title={child.title}
 									image={child.image}
 									link={child.link}
-									description={child.description}
+									description={''}
 									source={data.sourceId}
 								/>
 							{/each}

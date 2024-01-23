@@ -20,7 +20,7 @@ export const getHome = async (sourceId?: string, page?: string) => {
 	const scraper = objectExtract(obj);
 	const data = scraper.home;
 	const url = source.url
-	const res = await scrapeData(url, data)
+	const res = await scrapeData(url, data, sourceId)
 	return { sourceId: source.id, categories: res }
 
 }
@@ -41,7 +41,7 @@ export const getParent = async (sourceId: string, id: string) => {
 	const scraper = objectExtract(obj);
 	const data = scraper.parent;
 	const url = source.url + hexToString(id)
-	const res = await scrapeData(url, data)
+	const res = await scrapeData(url, data, sourceId)
 	return { parent: res, sourceData: source }
 }
 
@@ -63,7 +63,7 @@ export const getChild = async (sourceId: string, id: string) => {
 	const scraper = objectExtract(obj);
 	const data = scraper.episode;
 	const url = source.url + hexToString(id)
-	const res = await scrapeData(url, data)
+	const res = await scrapeData(url, data, sourceId)
 	return { episode: res, sourceData: source }
 }
 
@@ -82,6 +82,6 @@ export const getSearch = async (sourceId: string, keyword: string) => {
 	const scraper = objectExtract(obj);
 	const data = scraper.search;
 	const url = source.url + scraper?.search?.[1]?.selector?.replace('*', keyword)
-	const res = await scrapeData(url, data)
+	const res = await scrapeData(url, data,sourceId)
 	return { search: res }
 }

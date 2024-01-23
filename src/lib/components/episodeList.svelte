@@ -20,7 +20,7 @@
 										href={`/episode/${hexUrl(episode?.link)}?source=${sourceId}`}
 									>
 										<span
-											class="portal-key aboslute top-0 left-0 text-5xl text-white bg-secondary text-center w-12"
+											class="portal-key top-0 left-0 text-5xl text-white w-full bg-slate-500 text-center"
 											>{i + 1}</span
 										>
 										{episode.title}

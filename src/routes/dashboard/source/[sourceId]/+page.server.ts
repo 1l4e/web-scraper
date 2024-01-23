@@ -56,10 +56,8 @@ export const actions: Actions = {
 				url,
 				data: obj
 			})
-			// return fail(500, {
-			// 	message: "Fail"
-			// })
 		} catch (error: any) {
+			console.log(error.message)
 			return fail(400, {
 				message: "Database Error"
 			})

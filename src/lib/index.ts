@@ -1,4 +1,3 @@
-// place files you want to import through the `$lib` alias in this folder.
 
 export function formDataToObject(formData: FormData) {
 	const object = {};
@@ -11,13 +10,15 @@ export function formDataToObject(formData: FormData) {
 	return object;
 }
 
+
 function setObjectProperty(obj: any, keys: any, value: any) {
 	const currentKey = keys.shift();
 	if (keys.length === 0) {
+		// console.log(currentKey,value)
 		if (currentKey === 'multiple') {
 			obj[currentKey] = value === 'on';
 		} else {
-			obj[currentKey] = value;
+			obj[currentKey] = value ? value : {};
 		}
 	} else {
 		obj[currentKey] = obj[currentKey] || (isNaN(keys[0]) ? {} : []);

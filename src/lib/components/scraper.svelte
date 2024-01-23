@@ -70,8 +70,11 @@
 		}
 	};
 	export let childNumber: number;
-	const removeSelector = (id: number) => {
-		scraper = scraper.filter((item: any) => item.id !== id);
+	const removeSelector = (id: any) => {
+		scraper = scraper.filter(
+			(item: any) =>
+				!(item.name === id.name && item.type === id.type && item.selector === id.selector)
+		);
 		toast.success('Removed selector');
 	};
 	function calculateColorClass() {
@@ -150,11 +153,9 @@
 						<button on:click|preventDefault={() => addChild(i)} class="btn btn-primary">
 							<PlusOutlined size="20" />
 						</button>
-						{#if item.deleteable}
-							<button on:dblclick|preventDefault={() => removeSelector(i)} class="btn btn-error">
-								<CloseOutlined size="20" />
-							</button>
-						{/if}
+						<button on:click|preventDefault={() => removeSelector(item)} class="btn btn-error">
+							<CloseOutlined size="20" />
+						</button>
 					</div>
 				</div>
 				<div class={`${!expanded ? 'hidden' : 'flex'}`}>
