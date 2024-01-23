@@ -43,5 +43,5 @@
 			{/if}
 		</ul>
 	</div>
-	<EpisodeList sourceId={data.sourceId} parent={episode[1]} />
+	<EpisodeList sourceId={data.sourceId} parent={episode[1] || episode[0]} />
 </div>

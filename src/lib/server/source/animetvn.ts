@@ -48,7 +48,6 @@ export async function animetvnProxy(server: any, source: any) {
                     "referrer": "https://play.playhbq.xyz/",
                 },
             })
-            console.log(res3.data)
             // servers.push(`http://localhost:5173/api/proxy?url=${play}&referer=${url}&token=${source.csrf}`)
         }
         servers.push(play)

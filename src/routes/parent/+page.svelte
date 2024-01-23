@@ -28,7 +28,7 @@
 		{/if}
 		<div class="flex flex-row w-full gap-6 px-4">
 			<div class="flex">
-				<img src={parent?.[0]?.image} alt={parent?.[0]?.title} />
+				<img class="max-h-[300px]" src={parent?.[0]?.image} alt={parent?.[0]?.title} />
 			</div>
 			<div class="flex flex-col gap-6">
 				<ul>

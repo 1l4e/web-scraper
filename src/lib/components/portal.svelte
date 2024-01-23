@@ -5,6 +5,7 @@
 	const sourceId = $page.data.sourceId;
 	$: search = false;
 	$: keys = '';
+	$: list = false;
 	let timeoutId: any;
 	function handleKeyPress(e: KeyboardEvent) {
 		updateCardKey();
@@ -21,6 +22,10 @@
 				if (searchInput) {
 					searchInput.focus();
 				}
+				return;
+			}
+			if (e.key === 'l') {
+				list = !list;
 				return;
 			}
 		}

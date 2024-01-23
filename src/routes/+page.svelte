@@ -33,6 +33,7 @@
 								<Card
 									title={child.title}
 									image={child.image}
+									status={child.status}
 									link={child.link}
 									description={''}
 									source={data.sourceId}

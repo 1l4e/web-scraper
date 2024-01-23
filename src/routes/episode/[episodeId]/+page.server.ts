@@ -2,8 +2,8 @@
 import { getChild } from "$lib/client";
 import axios from "axios";
 import type { PageServerLoad } from "./$types";
-import cookie from "cookie";
 import { animetvnProxy } from "$lib/server/source/animetvn";
+import { phimTm } from "$lib/server/source/phimtm";
 
 export const load: PageServerLoad = async ({ url, params }) => {
 	const searchParams = url.searchParams
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 	const serverUrl = url.origin + url.pathname + '?source=' + source;
 	if (episode[0]?.server && episode[0].server.length > 0) {
 		const server = episode[0].server[0];
-		const { animetvn, post, nume } = server;
+		const { phimtm, animetvn, post, nume } = server;
 		let postData: any
 		postData = {
 			action: 'doo_player_ajax',
@@ -31,6 +31,9 @@ export const load: PageServerLoad = async ({ url, params }) => {
 		try {
 			if (animetvn) {
 				servers = await animetvnProxy(server, sourceData)
+			}
+			else if (phimtm) {
+				servers = await phimTm(server, sourceData, url.origin)
 			}
 			else {
 				const res = await axios.post(url.origin + '/api/proxy', { url: uurl, postData, referer: sourceData.url });
