@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
+	import { goto, onNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
 	$: sourceId = $page.data.sourceId;
 	$: search = false;
@@ -92,6 +92,10 @@
 			}
 		});
 	}
+	onNavigate(() => {
+		updateCardKey();
+		updateSourceKey();
+	});
 	onMount(() => {
 		window.addEventListener('scroll', updateCardKey);
 		updateCardKey();
@@ -103,8 +107,8 @@
 </script>
 
 {#if keys && !search}
-	<div class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center">
-		{keys}
+	<div class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center text-7xl">
+		{keys.toUpperCase()}
 	</div>
 {/if}
 <div
