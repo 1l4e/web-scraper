@@ -15,7 +15,7 @@
 							<li class="flex">
 								{#if episode?.link}
 									<a
-										data-portal="card"
+										data-portal="episode"
 										class="flex w-20 justify-between flex-col text-3xl relative bg-black"
 										href={`/episode/${hexUrl(episode?.link)}?source=${sourceId}`}
 									>

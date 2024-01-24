@@ -8,6 +8,7 @@ import { createOneSource, findManyScraper } from "$lib/server/model";
 export const load: PageServerLoad = async ({ locals }) => {
 	const session = await locals.auth.validate();
 	if (!session) throw redirect(302, "/login");
+	if (session.user.role !== "ADMIN") throw redirect(302, "/");
 	const scrapers = await findManyScraper()
 	return {
 		userId: session.user.userId,
@@ -22,6 +23,7 @@ export const actions: Actions = {
 		const session = await locals.auth.validate();
 		if (!session) throw redirect(302, "/login");
 
+		if (session.user.role !== "ADMIN") throw redirect(302, "/");
 		const formData = await request.formData();
 		const convertedObject: any = formDataToObject(formData);
 		const { name, image, url, ...obj } = convertedObject

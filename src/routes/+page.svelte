@@ -15,16 +15,18 @@
 	// 		goto(href);
 	// 	}
 	// }
+	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
+	$: names = source?.scraper?.data?.home?.name;
 </script>
 
 <div data-portal="page" class="flex w-full justify-center items-center flex-col gap-6">
 	<div class="flex flex-col gap-5 w-full">
 		{#each data?.categories as category, i (i)}
 			<div class="flex w-full gap-5 bg-slate-600">
-				<div class="flex w-[220px] justify-center items-center text-3xl bg-slate-500 relative">
-					{category.name}
+				<div class="flex w-[220px] justify-center items-center text-3xl bg-slate-500 relative px-4">
+					{names?.[i]}
 				</div>
-				<div class="w-full flex max-w-screen">
+				<div class="w-full flex max-w-screen py-4">
 					{#if category.selector}
 						<ul class="flex gap-4 flex-wrap">
 							{#each category.selector as child, j (j)}

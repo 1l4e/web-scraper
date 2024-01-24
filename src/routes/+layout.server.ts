@@ -11,6 +11,7 @@ export const load: any = async ({ locals }: any) => {
 	return {
 		userId: session.user.userId,
 		email: session.user.email,
+		role: session.user.role,
 		sources
 	};
 };

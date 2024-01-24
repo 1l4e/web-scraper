@@ -2,44 +2,15 @@
 	import { onMount } from 'svelte';
 	import { goto, onNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-	$: sourceId = $page.data.sourceId;
 	$: search = false;
 	$: keys = '';
 	let timeoutId: any;
 	function handleKeyPress(e: KeyboardEvent) {
-		updateCardKey();
-		updateSourceKey();
 		const page = document.querySelector('[data-portal="page"]');
 		timeoutId && clearTimeout(timeoutId);
 		if (!page) return;
 		const isNumber = /^[0-9]$/i.test(e.key);
 		const isLetter = /^[a-z]$/i.test(e.key);
-		if (!keys) {
-			if (e.key === 's' && !search) {
-				search = true;
-				const searchInput = document.querySelector<HTMLInputElement>('input[name="search"]');
-				if (searchInput) {
-					searchInput.focus();
-				}
-				return;
-			}
-		}
-		if (search) {
-			if (e.key === 'Backspace') {
-				keys.slice(0, -1);
-			}
-			if (e.key === 'Escape' && search) {
-				search = false;
-			}
-			(isLetter || isNumber) && (keys += e.key);
-			timeoutId = setTimeout(() => {
-				if (!keys) return;
-				search = false;
-				goto(`/search?keyword=${keys}&source=${sourceId}`);
-				keys = '';
-			}, 2000);
-			return;
-		}
 		if (isNumber || isLetter) {
 			if ((isNumber && /[a-z]/i.test(keys)) || (isLetter && /[0-9]/.test(keys))) {
 				keys = '';
@@ -55,14 +26,39 @@
 					const link = card.getAttribute('href');
 					if (!link) return;
 					goto(link);
+					keys = '';
+					return;
+				}
+			});
+			const allEpisodes = document.querySelectorAll('[data-portal="episode"]');
+			allEpisodes.forEach((episode) => {
+				if (episode.getAttribute('data-key') === keys) {
+					const link = episode.getAttribute('href');
+					if (!link) return;
+					goto(link);
+					keys = '';
+					return;
 				}
 			});
 			keys = '';
 		}, 2000);
 		return () => {
-			clearTimeout(timeoutId);
+			cleanup();
 		};
 	}
+	function updateEpisodeKey() {
+		let id = 1;
+		const allEpisodes = document.querySelectorAll('[data-portal="episode"]');
+		allEpisodes.forEach((episode: any) => {
+			const index = String(id++);
+			episode.setAttribute('data-key', index);
+			const portalKeyElement = episode.querySelector('.portal-key');
+			if (portalKeyElement) {
+				portalKeyElement.textContent = index;
+			}
+		});
+	}
+
 	function updateCardKey() {
 		let id = 1;
 		const allCards = document.querySelectorAll('[data-portal="card"]');
@@ -92,14 +88,20 @@
 			}
 		});
 	}
-	onNavigate(() => {
+	function cleanup() {
+		clearTimeout(timeoutId);
 		updateCardKey();
 		updateSourceKey();
+		updateEpisodeKey();
+	}
+	onNavigate(() => {
+		cleanup();
 	});
 	onMount(() => {
 		window.addEventListener('scroll', updateCardKey);
 		updateCardKey();
 		updateSourceKey();
+		updateEpisodeKey();
 		return () => {
 			window.removeEventListener('scroll', updateCardKey);
 		};
@@ -119,6 +121,7 @@
 		name="search"
 		bind:value={keys}
 		placeholder="Search"
+		autocomplete="off"
 		type="text"
 		class="input input-bordered input-lg input-primary w-full"
 	/>

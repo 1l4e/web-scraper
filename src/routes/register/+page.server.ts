@@ -41,7 +41,8 @@ export const actions: Actions = {
                     password // hashed by Lucia
                 },
                 attributes: {
-                    email: username
+                    email: username,
+                    role: "USER"
                 }
             });
             const session = await auth.createSession({

@@ -8,6 +8,7 @@
 
 	import 'nprogress/nprogress.css';
 	import Portal from '$lib/components/portal.svelte';
+	import { ROLE } from '@prisma/client';
 
 	NProgress.configure({
 		minimum: 0.16
@@ -42,7 +43,7 @@
 
 <div class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative">
 	<div class="w-full flex flex-col">
-		{#if data?.userId}
+		{#if data?.userId && data?.role === ROLE.ADMIN}
 			<Header {menu} {data} />
 		{/if}
 		<div class="flex mx-auto w-full flex-col gap-6 pb-[140px]">

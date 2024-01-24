@@ -9,6 +9,7 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	const session = await locals.auth.validate();
 	if (!session) throw redirect(302, "/login");
 
+	if (session.user.role !== "ADMIN") throw redirect(302, "/");
 	const source = await findOneSource(params.sourceId)
 	const scrapers = await findManyScraper()
 	return {
@@ -23,6 +24,7 @@ export const actions: Actions = {
 	update: async ({ request, locals, params }) => {
 		const session = await locals.auth.validate();
 		if (!session) throw redirect(302, "/login");
+		if (session.user.role !== "ADMIN") throw redirect(302, "/");
 		const sourceId = params.sourceId
 		if (!sourceId) {
 			return fail(400, {

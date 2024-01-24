@@ -3,3 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+    .text-shadow {
+        text-shadow:1px 0px white,-2px 0px white, 0px 1px white, 0px -1px white, 2px 0px black, 0px 2px black, 0px -2px black, 0px 2px black
+    }
+}
