@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { goto, onNavigate } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
 	import { fade } from 'svelte/transition';
 	$: search = false;
 	$: keys = '';
@@ -21,25 +21,28 @@
 			const allCards = document.querySelectorAll(
 				isNumber ? '[data-portal="card"]' : '[data-portal="source"]'
 			);
-			allCards.forEach((card) => {
+			for (const card of allCards) {
 				if (card.getAttribute('data-key') === keys) {
 					const link = card.getAttribute('href');
-					if (!link) return;
-					goto(link);
-					keys = '';
-					return;
+					if (link) {
+						goto(link);
+						keys = '';
+					}
+					return; // Break out of the loop
 				}
-			});
+			}
 			const allEpisodes = document.querySelectorAll('[data-portal="episode"]');
-			allEpisodes.forEach((episode) => {
+			for (const episode of allEpisodes) {
 				if (episode.getAttribute('data-key') === keys) {
 					const link = episode.getAttribute('href');
-					if (!link) return;
-					goto(link);
-					keys = '';
-					return;
+					if (link) {
+						console.log('Found');
+						goto(link);
+						keys = '';
+					}
+					return; // Break out of the loop
 				}
-			});
+			}
 			keys = '';
 		}, 2000);
 		return () => {
@@ -94,7 +97,7 @@
 		updateSourceKey();
 		updateEpisodeKey();
 	}
-	onNavigate(() => {
+	afterNavigate(() => {
 		cleanup();
 	});
 	onMount(() => {

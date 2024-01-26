@@ -27,7 +27,9 @@
 	}
 </script>
 
-<div class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative bg-primary-content">
+<div
+	class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative bg-primary-content bg-boxed"
+>
 	<div class="w-full flex flex-col gap-6">
 		{#if data?.userId && data?.role === ROLE.ADMIN}
 			<Header {menu} {data} />
