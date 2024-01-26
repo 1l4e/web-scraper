@@ -19,13 +19,16 @@ export const load: PageServerLoad = async ({ url, params }) => {
 	const serverUrl = url.origin + url.pathname + '?source=' + source;
 	if (episode[0]?.server && episode[0].server.length > 0) {
 		const server = episode[0].server[0];
-		const { phimtm, animetvn, post, nume } = server;
+		const { xoilac,phimtm, animetvn, post, nume } = server;
 		let postData: any
 		postData = {
 			action: 'doo_player_ajax',
 			post,
 			nume,
 			type: 'tv'
+		}
+		if (xoilac){
+			servers.push(xoilac)
 		}
 		const uurl = sourceData?.scraper.data?.post.selector[0];
 		try {

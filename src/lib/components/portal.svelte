@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto, onNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { fade } from 'svelte/transition';
 	$: search = false;
 	$: keys = '';
 	let timeoutId: any;
@@ -109,7 +109,10 @@
 </script>
 
 {#if keys && !search}
-	<div class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center text-7xl">
+	<div
+		class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center text-7xl py-2 z-[51] rounded-lg"
+		transition:fade
+	>
 		{keys.toUpperCase()}
 	</div>
 {/if}

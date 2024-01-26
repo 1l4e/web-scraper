@@ -27,10 +27,10 @@
 			</div>
 		{/if}
 		<div class="flex flex-row w-full gap-6 px-4">
-			<div class="flex">
-				<img class="max-h-[300px]" src={parent?.[0]?.image} alt={parent?.[0]?.title} />
+			<div class="flex w-1/4">
+				<img class="w-full h-auto" src={parent?.[0]?.image} alt={parent?.[0]?.title} />
 			</div>
-			<div class="flex flex-col gap-6">
+			<div class="flex w-3/4 flex-col gap-6">
 				<ul>
 					{#each Object.entries(parent[0]) as [key, value]}
 						<li class="text-xl">{key.toUpperCase()}: {value}</li>

@@ -5,6 +5,7 @@
 	import '../app.css';
 	import { navigating } from '$app/stores';
 	import NProgress from 'nprogress';
+	import { menu } from '$lib/util';
 
 	import 'nprogress/nprogress.css';
 	import Portal from '$lib/components/portal.svelte';
@@ -13,21 +14,6 @@
 	NProgress.configure({
 		minimum: 0.16
 	});
-	const menu = [
-		{ id: 1, name: 'Home', slug: '/' },
-		{
-			id: 2,
-			name: 'Source',
-			slug: '/dashboard/source'
-		},
-		{
-			id: 6,
-			name: 'Scraper',
-			slug: '/dashboard/scraper'
-		},
-		{ id: 3, name: 'Dashboard', slug: '/dashboard' },
-		{ id: 4, name: 'Collection', slug: '/dashboard/collection' }
-	];
 
 	export let data: any;
 	let sources = data.sources;
@@ -41,12 +27,12 @@
 	}
 </script>
 
-<div class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative">
-	<div class="w-full flex flex-col">
+<div class="flex w-full max-w-screen min-h-screen flex-col gap-6 relative bg-primary-content">
+	<div class="w-full flex flex-col gap-6">
 		{#if data?.userId && data?.role === ROLE.ADMIN}
 			<Header {menu} {data} />
 		{/if}
-		<div class="flex mx-auto w-full flex-col gap-6 pb-[140px]">
+		<div class="flex mx-auto w-full flex-col gap-6 bg-primary-content mb-[120px]">
 			<slot />
 			<SideBar {sources} />
 		</div>

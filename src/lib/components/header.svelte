@@ -3,7 +3,7 @@
 	export let data: any;
 </script>
 
-<div class="navbar bg-base-100 container mx-auto drop-shadow-md">
+<div class="navbar bg-base-100 container mx-auto drop-shadow-md z-50 rounded-b-lg">
 	<div class="navbar-start">
 		<div class="dropdown">
 			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden">

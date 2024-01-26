@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ url }) => {
 			return;
 		}
 		const embedData = res.data;
-		const { embed_url, iframe } = embedData;
+		const { embed_url } = embedData;
 		servers.push(embed_url)
 	}
 	return {

@@ -59,7 +59,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 					value = $(element).attr(selector) || $(element).text();
 				}
 				if (type === 'html' || type === 'group') {
-					// value = "html"
+					value = "html"
 				}
 				if (type === 'image') {
 					value = $(element).find(selector).attr('src');

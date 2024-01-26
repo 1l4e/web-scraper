@@ -9,7 +9,7 @@
 </script>
 
 <li
-	class={`flex rounded-md gap-5 bg-cover overflow-hidden`}
+	class={`flex rounded-md gap-5 bg-cover overflow-hidden bg-primary-content`}
 	style={`background-image: url('${image}');`}
 >
 	<a

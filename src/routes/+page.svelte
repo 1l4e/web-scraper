@@ -22,13 +22,17 @@
 <div data-portal="page" class="flex w-full justify-center items-center flex-col gap-6">
 	<div class="flex flex-col gap-5 w-full">
 		{#each data?.categories as category, i (i)}
-			<div class="flex w-full gap-5 bg-slate-600">
-				<div class="flex w-[220px] justify-center items-center text-3xl bg-slate-500 relative px-4">
-					{names?.[i]}
+			<div class="flex w-full gap-5 bg-slate-800 flex-col">
+				<div class="flex mx-auto">
+					<div
+						class="flex justify-center items-center text-2xl bg-red-500 px-4 rounded-b-md py-2 text-white"
+					>
+						{names?.[i]}
+					</div>
 				</div>
-				<div class="w-full flex max-w-screen py-4">
+				<div class="w-full flex max-w-screen py-4 mx-auto justify-center items-center">
 					{#if category.selector}
-						<ul class="flex gap-4 flex-wrap">
+						<ul class="flex gap-4 flex-wrap w-full justify-center">
 							{#each category.selector as child, j (j)}
 								<Card
 									title={child.title}
