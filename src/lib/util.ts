@@ -10,6 +10,7 @@ export { cn };
 
 export function hexUrl(url: string) {
 	if (!url) return '';
+	if (!url.startsWith('http')) return url;
 	return stringToHex(new URL(url).pathname);
 }
 
