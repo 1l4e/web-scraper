@@ -67,6 +67,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 		servers,
 		serverUrl,
 		reverse,
+		title: sourceData?.name?.toUpperCase()
 	}
 
 }

@@ -56,9 +56,6 @@ export const getChild = async (sourceId: string, id: string) => {
 		}
 	})
 	if (!source) return { episode: null, sourceData: null }
-	// const options = {
-	// 	path: hexToString(id)
-	// }
 
 	const obj: any = source.scraper.data;
 	const scraper = objectExtract(obj);

@@ -10,6 +10,7 @@
 	import 'nprogress/nprogress.css';
 	import Portal from '$lib/components/portal.svelte';
 	import { ROLE } from '@prisma/client';
+	import { page } from '$app/stores';
 
 	NProgress.configure({
 		minimum: 0.16
@@ -17,6 +18,12 @@
 
 	export let data: any;
 	let sources = data.sources;
+	let title = 'XemPhim';
+	$: {
+		if ($page.data?.title) {
+			title = $page.data?.title;
+		}
+	}
 	$: {
 		if ($navigating) {
 			NProgress.start();
@@ -42,3 +49,6 @@
 </div>
 <Toaster position="top-center" richColors />
 <Portal />
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>

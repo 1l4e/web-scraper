@@ -1,20 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/components/card.svelte';
-	// import { goto, preloadData, pushState } from '$app/navigation';
-	// import { page } from '$app/stores';
-	// import ParentPage from './parent/+page.svelte';
 	export let data: any;
-	// async function handleClick(e: any) {
-	// 	if (e.metaKey || innerWidth < 640) return;
-	// 	e.preventDefault();
-	// 	const { href } = e.currentTarget;
-	// 	const result = await preloadData(href);
-	// 	if (result.type === 'loaded' && result.status === 200) {
-	// 		pushState(href, { selected: result.data });
-	// 	} else {
-	// 		goto(href);
-	// 	}
-	// }
 	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
 	$: names = source?.scraper?.data?.home?.name;
 </script>

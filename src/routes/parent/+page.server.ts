@@ -39,7 +39,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		parent,
 		servers,
 		serverUrl,
-		revert: false
+		revert: false,
+		title: sourceData?.name?.toUpperCase() + " - " + parent[0]?.title
 	}
 
 }

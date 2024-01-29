@@ -3,6 +3,7 @@
 	// import { page } from '$app/stores';
 	import EpisodeList from '$lib/components/episodeList.svelte';
 	export let data: any;
+	console.log(data);
 	const parent = data.parent;
 	const servers = data?.servers;
 	let episodeUrl = '';
