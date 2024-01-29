@@ -2,10 +2,25 @@
 	import type { Source } from '@prisma/client';
 	export let sources: Source[];
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	$: sourceId = $page.data.sourceId;
+
+	onMount(() => {
+		addEventListener('scroll', () => {
+			const sidebar = document.querySelector('[data-portal="sidebar"]');
+			//if scroll up hide sidebar
+			if (window.scrollY > 0) {
+				sidebar?.classList.remove('hidden');
+			}
+			//if scroll down show sidebar
+			if (window.scrollY === 0) {
+				sidebar?.classList.add('hidden');
+			}
+		});
+	});
 </script>
 
-<div class="fixed bottom-0 w-full">
+<div data-portal="sidebar" class="hidden fixed bottom-0 w-full">
 	<div
 		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-base-100 h-[100px] gap-5 p-5 z-10 items-center"
 	>

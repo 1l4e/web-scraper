@@ -1,5 +1,6 @@
 <script lang="ts">
 	import EpisodeList from '$lib/components/episodeList.svelte';
+	import VideoController from '$lib/components/videoController.svelte';
 
 	export let data: any;
 	const episode = data.episode;
@@ -9,10 +10,14 @@
 
 {#if episodeUrl}
 	<div class="flex w-full gap-6">
-		<div id="player" class="bg-white w-full h-[80vh] aspect-video relative flex shrink-0">
+		<div
+			data-portal="player"
+			id="player"
+			class="bg-white w-full h-[100vh] aspect-video relative flex shrink-0"
+		>
 			<iframe
 				title="Video"
-				sandbox="allow-same-origin allow-scripts "
+				sandbox="allow-same-origin allow-scripts"
 				class="absolute top-0 left-0 w-full h-full"
 				src={episodeUrl}
 				allowfullscreen
@@ -45,3 +50,4 @@
 	</div>
 	<EpisodeList sourceId={data.sourceId} parent={episode[1] || episode[0]} />
 </div>
+<VideoController />

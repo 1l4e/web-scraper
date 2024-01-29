@@ -11,6 +11,50 @@
 		if (!page) return;
 		const isNumber = /^[0-9]$/i.test(e.key);
 		const isLetter = /^[a-z]$/i.test(e.key);
+		if (!keys && e.key === 'f') {
+			if (document.fullscreenElement) {
+				// If already in fullscreen, exit fullscreen
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+					/* @ts-ignore */
+				} else if (document.mozCancelFullScreen) {
+					// Firefox
+					/* @ts-ignore */
+					document.mozCancelFullScreen();
+					/* @ts-ignore */
+				} else if (document.webkitExitFullscreen) {
+					// Chrome, Safari and Opera
+					/* @ts-ignore */
+					document.webkitExitFullscreen();
+					/* @ts-ignore */
+				} else if (document.msExitFullscreen) {
+					// IE/Edge
+					/* @ts-ignore */
+					document.msExitFullscreen();
+				}
+			} else {
+				// If not in fullscreen, request fullscreen
+				if (document.documentElement.requestFullscreen) {
+					document.documentElement.requestFullscreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.mozRequestFullScreen) {
+					// Firefox
+					/* @ts-ignore */
+					document.documentElement.mozRequestFullScreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.webkitRequestFullscreen) {
+					// Chrome, Safari and Opera
+					/* @ts-ignore */
+					document.documentElement.webkitRequestFullscreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.msRequestFullscreen) {
+					// IE/Edge
+					/* @ts-ignore */
+					document.documentElement.msRequestFullscreen();
+				}
+			}
+			return;
+		}
 		if (isNumber || isLetter) {
 			if ((isNumber && /[a-z]/i.test(keys)) || (isLetter && /[0-9]/.test(keys))) {
 				keys = '';
