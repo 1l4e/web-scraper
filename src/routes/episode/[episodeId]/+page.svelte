@@ -42,22 +42,22 @@
 		<ul class="flex flex-row gap-6">
 			{#if episode && episode.length > 0}
 				{#each servers as server, i (i)}
-					<a
-						href={server?.src}
-						class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md px-8 py-4"
-					>
-						<!-- <span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span> -->
-						{server?.title || 'Server ' + (i + 1)}
-					</a>
-					<!-- <button -->
-					<!-- 	on:click|preventDefault={() => { -->
-					<!-- 		episodeUrl = server; -->
-					<!-- 	}} -->
-					<!-- 	class="relative cursor-pointer text-white bg-black flex justify-center items-center rounded-md" -->
+					<!-- <a -->
+					<!-- 	href={server?.src} -->
+					<!-- 	class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md px-8 py-4" -->
 					<!-- > -->
-					<!-- 	<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span> -->
+					<!-- 	<!-- <span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span> --> -->
 					<!-- 	{server?.title || 'Server ' + (i + 1)} -->
-					<!-- </button> -->
+					<!-- </a> -->
+					<button
+						on:click|preventDefault={() => {
+							episodeUrl = server;
+						}}
+						class="relative cursor-pointer text-white bg-black flex justify-center items-center rounded-md"
+					>
+						<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
+						{server?.title || 'Server ' + (i + 1)}
+					</button>
 				{/each}
 			{/if}
 		</ul>
