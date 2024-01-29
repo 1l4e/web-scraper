@@ -34,23 +34,22 @@ export const actions: Actions = {
             });
         }
         try {
-            return
-            // const user = await auth.createUser({
-            //     key: {
-            //         providerId: "username", // auth method
-            //         providerUserId: username.toLowerCase(), // unique id when using "username" auth method
-            //         password // hashed by Lucia
-            //     },
-            //     attributes: {
-            //         email: username,
-            //         role: "USER"
-            //     }
-            // });
-            // const session = await auth.createSession({
-            //     userId: user.userId,
-            //     attributes: {}
-            // });
-            // locals.auth.setSession(session); // set session cookie
+            const user = await auth.createUser({
+                key: {
+                    providerId: "username", // auth method
+                    providerUserId: username.toLowerCase(), // unique id when using "username" auth method
+                    password // hashed by Lucia
+                },
+                attributes: {
+                    email: username,
+                    role: "USER"
+                }
+            });
+            const session = await auth.createSession({
+                userId: user.userId,
+                attributes: {}
+            });
+            locals.auth.setSession(session); // set session cookie
         } catch (e) {
             // this part depends on the database you're using
             // check for unique constraint error in user table

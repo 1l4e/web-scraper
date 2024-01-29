@@ -4,7 +4,7 @@
 	import Input from '$lib/components/input.svelte';
 	import Scraper from '$lib/components/scraper.svelte';
 	import { objectExtract } from '$lib';
-	import { DeleteFilled, PlusOutlined } from 'svelte-ant-design-icons';
+	import { CheckCircleFilled, DeleteFilled, PlusOutlined } from 'svelte-ant-design-icons';
 	import { toast } from 'svelte-sonner';
 	import { defaultTypes } from '$lib/util';
 
@@ -63,29 +63,55 @@
 </script>
 
 <div class="flex justify-center flex-row">
-	<h1 class="text-3xl py-5">{source?.name}</h1>
+	<h1 class="text-3xl py-5">
+		{source?.name} - {source?.active}
+	</h1>
 </div>
 
-<div class="flex justify-end w-full">
-	<div class="tooltip" data-tip="Delete source">
-		<label for="cfm_delete" class="btn btn-error">
-			<DeleteFilled size={20} />
-		</label>
-	</div>
-	<input type="checkbox" id="cfm_delete" class="modal-toggle" />
-	<div class="modal" role="dialog">
-		<div class="modal-box">
-			<h3 class="font-bold text-lg">Delete this Source</h3>
-			<p class="py-4">This action cannot be undone</p>
-			<div class="modal-action">
-				<label for="cfm_delete" class="btn">Close!</label>
-				<form action="?/delete" use:enhance={() => deleteSource()} method="post">
-					<button type="submit" class="btn btn-error">Delete</button>
-				</form>
+<div class="flex justify-end gap-6 py-6">
+	<div class="flex justify-end w-full">
+		<div class="tooltip" data-tip="Delete source">
+			<label for="cfm_active" class="btn btn-info">
+				<CheckCircleFilled size={20} />
+			</label>
+		</div>
+		<input type="checkbox" id="cfm_active" class="modal-toggle" />
+		<div class="modal" role="dialog">
+			<div class="modal-box">
+				<h3 class="font-bold text-lg">Deactive this Source</h3>
+				<p class="py-4">This action cannot be undone</p>
+				<div class="modal-action">
+					<label for="cfm_active" class="btn">Close!</label>
+					<form action="?/active" use:enhance={() => deleteSource()} method="post">
+						<input type="hidden" name="active" value={source?.active} />
+						<button type="submit" class="btn btn-info">Change</button>
+					</form>
+				</div>
 			</div>
 		</div>
+		<!-- </form> -->
 	</div>
-	<!-- </form> -->
+	<div class="flex justify-end w-full">
+		<div class="tooltip" data-tip="Delete source">
+			<label for="cfm_delete" class="btn btn-error">
+				<DeleteFilled size={20} />
+			</label>
+		</div>
+		<input type="checkbox" id="cfm_delete" class="modal-toggle" />
+		<div class="modal" role="dialog">
+			<div class="modal-box">
+				<h3 class="font-bold text-lg">Delete this Source</h3>
+				<p class="py-4">This action cannot be undone</p>
+				<div class="modal-action">
+					<label for="cfm_delete" class="btn">Close!</label>
+					<form action="?/delete" use:enhance={() => deleteSource()} method="post">
+						<button type="submit" class="btn btn-error">Delete</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!-- </form> -->
+	</div>
 </div>
 <div class="flex w-full flex-row max-w-7xl px-4 mx-auto gap-4">
 	<form

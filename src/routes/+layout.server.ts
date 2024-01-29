@@ -2,7 +2,7 @@ import { findManySources } from "$lib/server/model";
 
 export const load: any = async ({ locals }: any) => {
 	const session = await locals.auth.validate();
-	const sources = await findManySources();
+	const sources = await findManySources(true);
 	if (!session) return {
 		userId: null,
 		email: null,
