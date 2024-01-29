@@ -16,6 +16,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 	const { episode, sourceData }: any = await getChild(source, episodeId)
 
 	let servers: any = [];
+	let reverse = false;
 
 	const serverUrl = url.origin + url.pathname + '?source=' + source;
 	if (episode[0]?.server && episode[0].server.length > 0) {
@@ -42,9 +43,11 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			else if (dongphim) {
 				const dpServers = episode[0].server;
 				servers = await dp(dpServers)
+				reverse = true
 			}
 			else {
-				const res = await axios.post(url.origin + '/api/proxy', { url: uurl, postData, referer: sourceData.url });
+				const requestData = { url: uurl, postData, referer: sourceData.url, type: "phimmoi" }
+				const res = await axios.post(url.origin + '/api/proxy', requestData);
 				if (res.status !== 200) {
 					return
 				}
@@ -54,7 +57,6 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			}
 		} catch (error: any) {
 			// Control cookie if fail then get another cookie and csrf
-			console.log(error.message)
 			servers.push({})
 		}
 	}
@@ -65,6 +67,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 		episode,
 		servers,
 		serverUrl,
+		reverse,
 	}
 
 }

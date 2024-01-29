@@ -3,12 +3,12 @@
 	import VideoController from '$lib/components/videoController.svelte';
 
 	export let data: any;
-	const episode = data.episode;
-	$: servers = data.servers;
+	$: episode = data?.episode;
+	$: servers = data?.servers;
 	$: episodeUrl = servers?.[0];
 </script>
 
-{#if episodeUrl}
+{#if episodeUrl && episodeUrl.length > 0}
 	<div class="flex w-full gap-6">
 		<div
 			data-portal="player"
@@ -48,6 +48,10 @@
 			{/if}
 		</ul>
 	</div>
-	<EpisodeList sourceId={data.sourceId} parent={episode[1] || episode[0]} />
+	<EpisodeList
+		sourceId={data.sourceId}
+		parent={Array.isArray(episode) && episode.length > 1 ? episode[1] : episode[0]}
+		revert={data.reverse}
+	/>
 </div>
 <VideoController />
