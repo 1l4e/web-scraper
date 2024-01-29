@@ -2,6 +2,7 @@ import { auth } from "$lib/server/lucia";
 import { fail, redirect } from "@sveltejs/kit";
 
 import type { PageServerLoad, Actions } from "./$types";
+import { SECRET_REFERER } from "$env/static/private";
 
 export const load: PageServerLoad = async ({ locals }) => {
     const session = await locals.auth.validate();
@@ -14,6 +15,12 @@ export const actions: Actions = {
         const formData = await request.formData();
         const username = formData.get("username");
         const password = formData.get("password");
+        const referer = formData.get("referer")
+        if (referer !== SECRET_REFERER) {
+            return fail(400, {
+                message: "Invalid referrer"
+            });
+        }
         // basic check
         if (
             typeof username !== "string" ||
