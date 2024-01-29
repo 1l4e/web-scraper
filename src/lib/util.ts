@@ -34,7 +34,6 @@ export const hexToString = (hex: string) => {
 export const defaultTypes = ['text', 'url', 'image', 'video', 'attributes', 'group', 'html', 'none']
 
 export const menu = [
-	{ id: 1, name: 'Home', slug: '/' },
 	{
 		id: 2,
 		name: 'Source',

@@ -9,13 +9,24 @@
 	if (servers && servers.length > 0) {
 		episodeUrl = servers[0];
 	}
+	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
+	$: image = parent?.[0]?.image;
+	$: {
+		if (!image?.startsWith('http')) {
+			image = source?.url + image;
+		}
+	}
 </script>
 
 <div data-portal="page">
 	{#if parent}
 		{#if episodeUrl}
 			<div class="flex w-full gap-6">
-				<div id="player" class="bg-white w-full h-[80vh] aspect-video relative flex shrink-0">
+				<div
+					data-portal="player"
+					id="player"
+					class="bg-white w-full h-[100vh] aspect-video relative flex shrink-0"
+				>
 					<iframe
 						title="video"
 						sandbox="allow-same-origin allow-scripts"
@@ -28,7 +39,7 @@
 		{/if}
 		<div class="flex flex-row w-full gap-6 px-4">
 			<div class="flex w-1/4">
-				<img class="w-full h-auto" src={parent?.[0]?.image} alt={parent?.[0]?.title} />
+				<img class="w-full h-auto" src={image} alt={parent?.[0]?.title} />
 			</div>
 			<div class="flex w-3/4 flex-col gap-6">
 				<ul>

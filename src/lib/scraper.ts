@@ -1,9 +1,10 @@
 import axios from "axios";
 import * as cheerio from 'cheerio'
 import prisma from "./server/prisma";
+import type { Source } from "@prisma/client";
 
 
-export async function scrapeData(url: string, configObject: any, sourceId?: string) {
+export async function scrapeData(url: string, configObject: any, source: Source) {
 	try {
 		const response = await axios.get(url);
 		const html = response.data;
@@ -23,26 +24,26 @@ export async function scrapeData(url: string, configObject: any, sourceId?: stri
 			csrf = $(csrfSection.selector).attr(csrfSection?.children?.[0]?.selector) || ""
 		}
 
-		if (sourceId) {
+		if (source) {
 			const data: any = {
 			}
 			cookies && (data.cookie = JSON.stringify(cookies))
 			csrf && (data.csrf = csrf)
 			await prisma.source.update({
 				where: {
-					id: sourceId
+					id: source.id
 				},
 				data
 			})
 		}
-		const scrapedData = scrapeSection(configObject, $);
+		const scrapedData = scrapeSection(configObject, $, source.url);
 		return scrapedData;
 	} catch (error) {
 		console.error('Error scraping data:', error);
 		return []
 	}
 }
-function scrapeSection(configObject: any, $: any, childElement?: any, multi?: string) {
+function scrapeSection(configObject: any, $: any, sourceUrl: string, childElement?: any, multi?: string) {
 	const scrapedData: any = []
 	if (childElement) {
 		// const selector = configObject[0].selector
@@ -63,6 +64,9 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 				}
 				if (type === 'image') {
 					value = $(element).find(selector).attr('src');
+					if (!value.startsWith('http')) {
+						value = new URL(value, sourceUrl).href
+					}
 				}
 				if (type === 'url') {
 					value = $(element).find(selector).attr('href');
@@ -73,7 +77,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 				if (children) {
 					const parentHtml = $.html(element);
 					const $children = cheerio.load(parentHtml);
-					const childrenData: any = scrapeSection(children, $children, element, multi);
+					const childrenData: any = scrapeSection(children, $children, sourceUrl, element, multi);
 					value = childrenData;
 				}
 				multiItem[fieldName] = value
@@ -105,6 +109,9 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 					}
 					if (type === 'image') {
 						value = $(element).find(selector).attr('src');
+						if (!value.startsWith('http')) {
+							value = new URL(value, sourceUrl).href
+						}
 					}
 					if (type === 'url') {
 						value = $(element).find(selector).attr('href');
@@ -115,7 +122,7 @@ function scrapeSection(configObject: any, $: any, childElement?: any, multi?: st
 					if (children) {
 						const parentHtml = $.html(element);
 						const $children = cheerio.load(parentHtml);
-						const childrenData: any = scrapeSection(children, $children, element, selector);
+						const childrenData: any = scrapeSection(children, $children, sourceUrl, element, selector);
 						value = childrenData;
 					}
 					multiItem[fieldName] = value

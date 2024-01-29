@@ -4,6 +4,7 @@ import axios from "axios";
 import type { PageServerLoad } from "./$types";
 import { animetvnProxy } from "$lib/server/source/animetvn";
 import { phimTm } from "$lib/server/source/phimtm";
+import { dp } from "$lib/server/source/dongphim";
 
 export const load: PageServerLoad = async ({ url, params }) => {
 	const searchParams = url.searchParams
@@ -19,7 +20,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 	const serverUrl = url.origin + url.pathname + '?source=' + source;
 	if (episode[0]?.server && episode[0].server.length > 0) {
 		const server = episode[0].server[0];
-		const { xoilac,phimtm, animetvn, post, nume } = server;
+		const { dongphim, xoilac, phimtm, animetvn, post, nume } = server;
 		let postData: any
 		postData = {
 			action: 'doo_player_ajax',
@@ -27,7 +28,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			nume,
 			type: 'tv'
 		}
-		if (xoilac){
+		if (xoilac) {
 			servers.push(xoilac)
 		}
 		const uurl = sourceData?.scraper.data?.post.selector[0];
@@ -37,6 +38,10 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			}
 			else if (phimtm) {
 				servers = await phimTm(server, sourceData, url.origin)
+			}
+			else if (dongphim) {
+				const dpServers = episode[0].server;
+				servers = await dp(dpServers)
 			}
 			else {
 				const res = await axios.post(url.origin + '/api/proxy', { url: uurl, postData, referer: sourceData.url });

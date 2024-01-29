@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { hexUrl } from '$lib/util';
+	import type { Source } from '@prisma/client';
 	export let image: string,
 		title: string,
 		description: string,
 		link: string,
 		source: string,
+		sourceData: Source,
 		status: string;
+	if (!image.startsWith('http')) image = sourceData.url + image;
 </script>
 
 <li

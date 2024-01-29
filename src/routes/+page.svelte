@@ -41,6 +41,7 @@
 									link={child.link}
 									description={''}
 									source={data.sourceId}
+									sourceData={source}
 								/>
 							{/each}
 						</ul>
