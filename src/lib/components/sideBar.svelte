@@ -29,10 +29,10 @@
 	}
 </script>
 
-<div data-portal="sidebar" class=" bottom-0 w-full">
-	<!-- <div class="fixed bg-black p-4 top-0 left-0"> -->
-	<!-- 	<img src={logo} alt="chamthoi" class="w-auto h-10" /> -->
-	<!-- </div> -->
+<div data-portal="sidebar" class="fixed bottom-0 w-full">
+	<div class="fixed bg-black p-4 top-0 left-0">
+		<img src={logo} alt="chamthoi" class="w-auto h-10" />
+	</div>
 	<div
 		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-base-100 h-[100px] gap-5 p-5 z-10 items-center"
 	>
