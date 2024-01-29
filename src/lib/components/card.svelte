@@ -22,11 +22,13 @@
 	>
 		<div class="flex w-[220px] justify-center items-end text-3xl relative">
 			<span
-				class="portal-key absolute top-0 w-full left-0 text-7xl text-black text-center text-shadow"
+				class="portal-key absolute top-0 w-full left-0 text-7xl text-red-500 text-center text-shadow"
 				>&nbsp;
 			</span>
 			<div class="flex flex-col">
-				<span class="w-full text-[24px] drop-shadow-sm text-black text-center text-shadow">
+				<span
+					class="w-full text-[20px] drop-shadow-sm text-red-500 font-bold text-center bg-black/80"
+				>
 					{title}
 				</span>
 				<span class="w-full font-bold text-[16px] text-orange-500 text-center text-shadow">

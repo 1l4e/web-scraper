@@ -157,7 +157,7 @@
 
 {#if keys && !search}
 	<div
-		class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center text-7xl py-2 z-[51] rounded-lg"
+		class="flex fixed top-5 left-5 min-w-32 h-40 bg-red-500 justify-center items-center text-7xl py-2 z-[51] rounded-lg text-shadow"
 		transition:fade
 	>
 		{keys.toUpperCase()}

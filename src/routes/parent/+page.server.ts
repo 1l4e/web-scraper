@@ -38,7 +38,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		id,
 		parent,
 		servers,
-		serverUrl
+		serverUrl,
+		revert: false
 	}
 
 }

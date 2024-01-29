@@ -53,11 +53,10 @@ export const load: PageServerLoad = async ({ url, params }) => {
 				}
 				const embedData = res.data;
 				const { embed_url } = embedData;
-				servers.push(embed_url)
+				servers.push({ src: embed_url, type: "embed" })
 			}
 		} catch (error: any) {
-			// Control cookie if fail then get another cookie and csrf
-			servers.push({})
+			servers.push({ src: "", type: "embed" })
 		}
 	}
 

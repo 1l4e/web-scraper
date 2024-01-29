@@ -9,7 +9,7 @@
 		const sidebar = document.querySelector('[data-portal="sidebar"]');
 		const handleScroll = () => {
 			const currentScrollY = window.scrollY;
-			if (currentScrollY > 50) {
+			if (currentScrollY > 0) {
 				sidebar?.classList.remove('hidden');
 			} else {
 				sidebar?.classList.add('hidden');
@@ -34,7 +34,7 @@
 		<img src={logo} alt="chamthoi" class="w-auto h-10" />
 	</div>
 	<div
-		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-base-100 h-[100px] gap-5 p-5 z-10 items-center"
+		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-transparent h-[60px] gap-5 p-5 z-10 items-center"
 	>
 		<ul class="flex relative gap-6">
 			{#each sources as item, i (i)}
@@ -52,7 +52,7 @@
 			<a
 				data-portal="source"
 				href="/search?source={sourceId}"
-				class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative pr-4"
+				class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative pr-4 overflow-hidden"
 			>
 				<span class="portal-key text-5xl bg-secondary text-center w-12">s</span>
 				Search

@@ -29,7 +29,7 @@ export async function phimTm(server: any, source: any, url: any) {
         const embedData = res.data
         const $ = cheerio.load(embedData)
         const server = $('iframe').attr('src')
-        servers.push(server)
+        servers.push({ src:server,type:"embed" })
         return servers
     } catch (error) {
         return servers

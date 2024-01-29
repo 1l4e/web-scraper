@@ -50,7 +50,7 @@ export async function animetvnProxy(server: any, source: any) {
             })
             // servers.push(`http://localhost:5173/api/proxy?url=${play}&referer=${url}&token=${source.csrf}`)
         }
-        servers.push(play)
+        servers.push({ src: play, type: "embed" })
     }
     return servers
 }
