@@ -29,7 +29,7 @@
 	// }
 </script>
 
-<div data-portal="sidebar" class="fixed bottom-0 w-full">
+<div data-portal="sidebar" class="flex w-full">
 	<div
 		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-transparent h-[60px] gap-5 p-5 z-10 items-center"
 	>

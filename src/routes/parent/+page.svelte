@@ -2,6 +2,7 @@
 	//import { goto, preloadData, pushState } from '$app/navigation';
 	// import { page } from '$app/stores';
 	import EpisodeList from '$lib/components/episodeList.svelte';
+	import SideBar from '$lib/components/sideBar.svelte';
 	export let data: any;
 	const parent = data.parent;
 	const servers = data?.servers;
@@ -19,26 +20,6 @@
 </script>
 
 <div data-portal="page">
-	<div class="flex flex-row w-full gap-6">
-		{#if episodeUrl}
-			<div class="flex justify-center">
-				<ul class="flex flex-row gap-6">
-					{#if parent && parent.length > 1}
-						{#each parent[1]?.server as server, i (i)}
-							<a
-								href={data.serverUrl + '&server=' + i}
-								class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md"
-							>
-								<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
-								{server.title}
-							</a>
-						{/each}
-					{/if}
-				</ul>
-			</div>
-		{/if}
-		<EpisodeList sourceId={data?.sourceId} parent={parent?.[1] || []} revert={false} />
-	</div>
 	{#if parent}
 		{#if episodeUrl}
 			<div class="flex w-full gap-6">
@@ -57,6 +38,27 @@
 				<div class="flex flex-col gap-6"></div>
 			</div>
 		{/if}
+		<SideBar sources={data?.sources} />
+		<div class="flex flex-row w-full gap-6">
+			{#if episodeUrl}
+				<div class="flex justify-center">
+					<ul class="flex flex-row gap-6">
+						{#if parent && parent.length > 1}
+							{#each parent[1]?.server as server, i (i)}
+								<a
+									href={data.serverUrl + '&server=' + i}
+									class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md"
+								>
+									<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
+									{server.title}
+								</a>
+							{/each}
+						{/if}
+					</ul>
+				</div>
+			{/if}
+			<EpisodeList sourceId={data?.sourceId} parent={parent?.[1] || []} revert={false} />
+		</div>
 		<div class="flex flex-row w-full gap-6 px-4">
 			<div class="flex w-1/4">
 				<img class="w-full h-auto" src={image} alt={parent?.[0]?.title} />

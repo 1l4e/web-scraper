@@ -1,5 +1,6 @@
 <script lang="ts">
 	import EpisodeList from '$lib/components/episodeList.svelte';
+	import SideBar from '$lib/components/sideBar.svelte';
 	import VideoComponent from '$lib/components/videoComponent.svelte';
 	import VideoController from '$lib/components/videoController.svelte';
 
@@ -42,13 +43,6 @@
 		<ul class="flex flex-row gap-6">
 			{#if episode && episode.length > 0}
 				{#each servers as server, i (i)}
-					<!-- <a -->
-					<!-- 	href={server?.src} -->
-					<!-- 	class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md px-8 py-4" -->
-					<!-- > -->
-					<!-- 	<!-- <span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span> --> -->
-					<!-- 	{server?.title || 'Server ' + (i + 1)} -->
-					<!-- </a> -->
 					<button
 						on:click|preventDefault={() => {
 							episodeUrl = server;
@@ -67,5 +61,6 @@
 		parent={episode && Array.isArray(episode) && episode.length > 1 ? episode[1] : episode[0]}
 		revert={data.reverse}
 	/>
+	<SideBar sources={data?.sources} />
 </div>
 <VideoController />

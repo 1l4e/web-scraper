@@ -42,7 +42,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			}
 			else if (dongphim) {
 				const dpServers = episode[0].server;
-				servers = await dp(dpServers)
+				servers = await dp(dpServers,url.origin)
 				reverse = true
 			}
 			else {

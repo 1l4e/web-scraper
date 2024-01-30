@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Card from '$lib/components/card.svelte';
+	import SideBar from '$lib/components/sideBar.svelte';
 	export let data: any;
 	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
 	$: names = source?.scraper?.data?.home?.name;
 </script>
 
 <div data-portal="page" class="flex w-full justify-center items-center flex-col gap-6">
+	<SideBar sources={data?.sources} />
 	<div class="flex flex-col gap-5 w-full">
 		{#each data?.categories as category, i (i)}
 			<div class="flex w-full gap-5 bg-slate-800 flex-col">

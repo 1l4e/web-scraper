@@ -12,6 +12,14 @@
 		player = videojs('movie', {
 			autoplay: true
 		});
+		// player.httpSourceSelector({
+		// 	withCredentials: false, // You can set other options here
+		// 	beforeRequest: (options, player) => {
+		// 		// Modify headers before each request
+		// 		options.headers['Your-Header-Name'] = 'Your-Header-Value';
+		// 		return options;
+		// 	}
+		// });
 	});
 	onDestroy(() => {
 		if (player) player.dispose();

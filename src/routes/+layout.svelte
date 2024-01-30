@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Header from '$lib/components/header.svelte';
-	import SideBar from '$lib/components/sideBar.svelte';
+	// import SideBar from '$lib/components/sideBar.svelte';
 	import { Toaster } from 'svelte-sonner';
 	import '../app.css';
 	import { navigating } from '$app/stores';
@@ -43,7 +43,7 @@
 		{/if}
 		<div class="flex mx-auto w-full flex-col gap-6 bg-primary-content mb-[120px]">
 			<slot />
-			<SideBar {sources} />
+			<!-- <SideBar {sources} /> -->
 		</div>
 	</div>
 </div>
