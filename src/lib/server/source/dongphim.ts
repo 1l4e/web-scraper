@@ -3,6 +3,7 @@ import axios from "axios"
 export async function dp(server: any, url: string) {
     const servers: any = []
     const tests: any = []
+    console.log(server)
     try {
         server.forEach((item: any) => {
             if (item.type === 'embed') {
@@ -10,7 +11,7 @@ export async function dp(server: any, url: string) {
                 tests.push({ src: item.dongphim, type: "embed" })
             }
             if (item.type === 'm3u8') {
-                servers.push({ src: item.dongphim, type: "m3u8" })
+                servers.push({ src: url + "/api/proxy4?url=" + item.dongphim, type: "m3u8" })
                 // servers.push({ src: url + '/api/proxy3?url=' + item.dongphim, type: "m3u8" })
             }
         })
@@ -48,6 +49,9 @@ export async function dp(server: any, url: string) {
                         }
                     }
                 }
+            }
+            else {
+                servers.push({ src: tests[i].src, type: "embed" })
             }
         }
         servers.sort((a: any, b: any) => {
