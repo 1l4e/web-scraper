@@ -12,7 +12,7 @@
 </script>
 
 <li
-	class={`flex rounded-md gap-5 bg-cover overflow-hidden bg-primary-content`}
+	class={`flex w-[220px] h-[320px] hover:scale-105 duration-200 btn rounded-md gap-5 bg-cover overflow-hidden bg-primary-content`}
 	style={`background-image: url('${image}');`}
 >
 	<a

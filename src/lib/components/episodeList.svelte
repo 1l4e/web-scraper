@@ -17,11 +17,10 @@
 								{#if episode?.link}
 									<a
 										data-portal="episode"
-										class="flex justify-between flex-col text-3xl relative bg-black visited:bg-gray-500"
+										class="flex btn btn-error h-auto w-auto justify-between flex-col text-3xl relative visited:bg-slate-500"
 										href={`/episode/${hexUrl(episode?.link)}?source=${sourceId}`}
 									>
-										<span
-											class="portal-key top-0 left-0 text-5xl text-white w-full bg-slate-500 text-center"
+										<span class="portal-key top-0 left-0 text-5xl text-white w-full text-center"
 											>{i + 1}</span
 										>
 										<span class="px-4 py-2">

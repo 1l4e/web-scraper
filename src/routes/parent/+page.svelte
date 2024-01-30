@@ -47,7 +47,7 @@
 							{#each parent[1]?.server as server, i (i)}
 								<a
 									href={data.serverUrl + '&server=' + i}
-									class="relative cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md"
+									class="relative btn btn-secondary cursor-pointer text-white bg-red-500 flex justify-center items-center rounded-md"
 								>
 									<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
 									{server.title}

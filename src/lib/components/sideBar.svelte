@@ -2,58 +2,42 @@
 	import type { Source } from '@prisma/client';
 	export let sources: Source[];
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	let keys = $page.url.searchParams.get('keyword') || '';
 	$: sourceId = $page.data.sourceId;
-
-	onMount(() => {
-		const sidebar = document.querySelector('[data-portal="sidebar"]');
-		const handleScroll = () => {
-			const currentScrollY = window.scrollY;
-			if (currentScrollY > 0) {
-				sidebar?.classList.remove('hidden');
-			} else {
-				sidebar?.classList.add('hidden');
-			}
-		};
-		window.addEventListener('scroll', handleScroll);
-		window.addEventListener('resize', handleScroll);
-		return () => {
-			window.removeEventListener('scroll', handleScroll);
-			window.removeEventListener('resize', handleScroll);
-		};
-	});
-	// let logo = '';
-	// $: source = $page.url.searchParams.get('source');
-	// $: if (source) {
-	// 	logo = $page.data.sources.find((s: any) => s.id === source)?.image || '';
-	// }
 </script>
 
 <div data-portal="sidebar" class="flex w-full">
 	<div
-		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-transparent h-[60px] gap-5 p-5 z-10 items-center"
+		class="container rounded-t-lg mx-auto flex justify-center flex-col bg-transparent gap-5 p-5 z-10 items-center"
 	>
-		<ul class="flex relative gap-6">
+		<form action="/search" class="flex mx-auto justify-center w-full lg:w-1/2 gap-4">
+			<input type="hidden" name="source" bind:value={sourceId} />
+			<input
+				name="keyword"
+				bind:value={keys}
+				placeholder="Search"
+				autocomplete="off"
+				type="text"
+				class="input input-bordered input-lg input-primary lg:w-1/2"
+			/>
+			<button type="submit" class="btn btn-primary btn-lg text-white">Search</button>
+		</form>
+		<ul class="flex relative gap-6 w-full mx-auto justify-center">
 			{#each sources as item, i (i)}
-				<li class="flex rounded-lg overflow-hidden">
+				<li class="flex rounded-lg overflow-hidden duration-150 hover:scale-105">
 					<a
 						data-portal="source"
 						href="/?source={item.id}"
-						class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
+						class="btn btn-secondary flex h-[150px] w-[150px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
 					>
-						<span class="portal-key uppercase text-5xl bg-secondary text-center w-12">{i + 1}</span>
+						<span
+							class="portal-key uppercase text-5xl bg-secondary text-center w-12 absolute top-0 left-0"
+							>{i + 1}</span
+						>
 						<img src={item.image} alt={item.name} class="h-[30px] w-full object-cover" />
 					</a>
 				</li>
 			{/each}
-			<a
-				data-portal="source"
-				href="/search?source={sourceId}"
-				class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative pr-4 overflow-hidden"
-			>
-				<span class="portal-key text-5xl bg-secondary text-center w-12">s</span>
-				Search
-			</a>
 		</ul>
 	</div>
 </div>

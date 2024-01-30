@@ -47,9 +47,8 @@
 						on:click|preventDefault={() => {
 							episodeUrl = server;
 						}}
-						class="relative cursor-pointer text-white bg-black flex justify-center items-center rounded-md"
+						class="relative btn-accent btn cursor-pointer text-white flex justify-center items-center rounded-md"
 					>
-						<span class=" top-0 left-0 px-4 py-4 bg-red-500">{i + 1}</span>
 						{server?.title || 'Server ' + (i + 1)}
 					</button>
 				{/each}
