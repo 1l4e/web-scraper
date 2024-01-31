@@ -4,7 +4,7 @@ import prisma from "./server/prisma";
 import type { Source } from "@prisma/client";
 
 
-export async function scrapeData(url: string, configObject: any, source: Source) {
+export async function scrapeData(url: string, configObject: any, source: Source, options?: any) {
 	try {
 		const response = await axios.get(url);
 		const html = response.data;
@@ -37,7 +37,31 @@ export async function scrapeData(url: string, configObject: any, source: Source)
 			})
 		}
 		const scrapedData = scrapeSection(configObject, $, source.url);
-		return scrapedData;
+		let categoryData: any = []
+		if (options?.category && options?.categoryItem) {
+			const categoryHtml = scrapeSection(options.category, $, source.url);
+			categoryHtml[0].selector.forEach((item: any) => {
+				if (!item.title || !item.link) {
+					return
+				}
+				if (!item.selector || item.selector === null) {
+					categoryData.push({
+						title: item.title,
+						link: item.link,
+						selector: []
+					})
+					return
+				}
+				const $ = cheerio.load(item.selector);
+				const res = scrapeSection(options.categoryItem, $, source.url);
+				categoryData.push({
+					title: item.title,
+					link: item.link,
+					selector: res
+				})
+			})
+		}
+		return { scrapedData, categoryData };
 	} catch (error) {
 		console.error('Error scraping data:', error);
 		return []
@@ -59,8 +83,11 @@ function scrapeSection(configObject: any, $: any, sourceUrl: string, childElemen
 				if (type === 'attributes') {
 					value = $(element).attr(selector) || $(element).text();
 				}
-				if (type === 'html' || type === 'group') {
-					value = "html"
+				if (type === 'group') {
+					value = "group"
+				}
+				if (type === 'html') {
+					value = $(element).find(selector).html();
 				}
 				if (type === 'image') {
 					value = $(element).find(selector).attr('src');
@@ -104,8 +131,11 @@ function scrapeSection(configObject: any, $: any, sourceUrl: string, childElemen
 						value = $(element).attr(selector)
 					}
 					const children = child.children
-					if (type === 'html' || type === 'group') {
-						value = "html"
+					if (type === 'group') {
+						value = "group"
+					}
+					if (type === 'html') {
+						value = $(element).find(selector).html();
 					}
 					if (type === 'image') {
 						value = $(element).find(selector).attr('src');

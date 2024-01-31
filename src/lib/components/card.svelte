@@ -26,12 +26,10 @@
 				>&nbsp;
 			</span>
 			<div class="flex flex-col">
-				<span
-					class="w-full text-[20px] drop-shadow-sm text-red-500 font-bold text-center bg-black/80"
-				>
+				<span class="w-full text-[20px] drop-shadow-sm text-red-500 font-bold text-center bg-black">
 					{title}
 				</span>
-				<span class="w-full font-bold text-[16px] text-orange-500 text-center text-shadow">
+				<span class="w-full font-bold text-[16px] text-orange-500 text-center bg-black">
 					{status} - {description}
 				</span>
 			</div>

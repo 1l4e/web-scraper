@@ -72,12 +72,4 @@
 			</div>
 		</div>
 	{/if}
-
-	<!-- {#if $page.state.selected} -->
-	<!-- 	<div class="flex fixed top-0 left-0 w-screen h-screen justify-center items-center bg-black/80"> -->
-	<!-- 		<div class="flex flex-col bg-black"> -->
-	<!-- 			<EpisodePage data={$page.state.selected} /> -->
-	<!-- 		</div> -->
-	<!-- 	</div> -->
-	<!-- {/if} -->
 </div>

@@ -17,7 +17,7 @@ declare global {
 			auth: import("lucia").AuthRequest;
 		}
 		interface PageState {
-			selected: any
+			nextPage: string
 		}
 	}
 }

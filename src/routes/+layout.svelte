@@ -10,6 +10,7 @@
 	import Portal from '$lib/components/portal.svelte';
 	import { ROLE } from '@prisma/client';
 	import { page } from '$app/stores';
+	import Error from '$lib/components/error/error.svelte';
 
 	NProgress.configure({
 		minimum: 0.16
@@ -40,8 +41,11 @@
 			<Header {menu} {data} />
 		{/if}
 		<div class="flex mx-auto w-full flex-col gap-6 bg-primary-content mb-[120px]">
-			<slot />
-			<!-- <SideBar {sources} /> -->
+			{#if $page.error}
+				<Error />
+			{:else}
+				<slot />
+			{/if}
 		</div>
 	</div>
 </div>

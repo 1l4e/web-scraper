@@ -146,9 +146,9 @@
 	});
 	onMount(() => {
 		window.addEventListener('scroll', updateCardKey);
-		updateCardKey();
-		updateSourceKey();
-		updateEpisodeKey();
+		// updateCardKey();
+		// updateSourceKey();
+		// updateEpisodeKey();
 		return () => {
 			window.removeEventListener('scroll', updateCardKey);
 		};

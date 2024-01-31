@@ -100,6 +100,16 @@ model Bookmark {
   chapter Chapter[]
 }
 
+model Filter {
+  id        String   @id @default(cuid())
+  name      String
+  data      String?
+  type      String?
+  active    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
 enum ROLE {
   ADMIN
   USER
