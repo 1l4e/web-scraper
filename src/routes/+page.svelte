@@ -6,7 +6,7 @@
 	export let data: any;
 	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
 	$: names = source?.scraper?.data?.home?.name;
-	let filter = $page.data.filter.data.toLowerCase();
+	let filter = $page?.data?.filter?.data?.toLowerCase();
 </script>
 
 <div data-portal="page" class="flex w-full justify-center items-center flex-col gap-6">
