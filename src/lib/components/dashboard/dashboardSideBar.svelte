@@ -1,28 +1,26 @@
 <script lang="ts">
-	import {
-		DashboardOutlined,
-		FundOutlined,
-		HddFilled,
-		HomeFilled,
-		UnorderedListOutlined
-	} from 'svelte-ant-design-icons';
+	import LucideArrowDownLeftFromCircle from '../icons/LucideArrowDownLeftFromCircle.svelte';
+	import LucideHardDrive from '../icons/LucideHardDrive.svelte';
+	import LucideHome from '../icons/LucideHome.svelte';
+	import LucideLayoutDashboard from '../icons/LucideLayoutDashboard.svelte';
+	import LucideListOrdered from '../icons/LucideListOrdered.svelte';
 
 	const menu = [
-		{ id: 1, name: 'Home', slug: '/', icon: HomeFilled },
+		{ id: 1, name: 'Home', slug: '/', icon: LucideHome },
 		{
 			id: 2,
 			name: 'Source',
 			slug: '/dashboard/source',
-			icon: HddFilled
+			icon: LucideHardDrive
 		},
 		{
 			id: 6,
 			name: 'Scraper',
 			slug: '/dashboard/scraper',
-			icon: FundOutlined
+			icon: LucideArrowDownLeftFromCircle
 		},
-		{ id: 3, name: 'Dashboard', slug: '/dashboard', icon: DashboardOutlined },
-		{ id: 4, name: 'Collection', slug: '/dashboard/collection', icon: UnorderedListOutlined }
+		{ id: 3, name: 'Dashboard', slug: '/dashboard', icon: LucideLayoutDashboard },
+		{ id: 4, name: 'Collection', slug: '/dashboard/collection', icon: LucideListOrdered }
 	];
 </script>
 

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { objectExtract } from '$lib';
+	import PlusCircle from '$lib/components/icons/PlusCircle.svelte';
 	import Input from '$lib/components/input.svelte';
 	import Scraper from '$lib/components/scraper.svelte';
 	import { defaultSource2, defaultTypes } from '$lib/util';
-	import { PlusOutlined } from 'svelte-ant-design-icons';
 	import type { PageData } from './$types';
 	import { toast } from 'svelte-sonner';
 
@@ -93,7 +93,7 @@
 						type="button"
 						class="btn btn-primary"
 					>
-						<PlusOutlined size="20" />
+						<PlusCircle />
 					</button>
 					<span>{newName}</span>
 				</div>

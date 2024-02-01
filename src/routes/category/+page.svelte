@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto, preloadData, pushState } from '$app/navigation';
 	import Card from '$lib/components/card.svelte';
+	import LoadingIcon from '$lib/components/icons/LoadingIcon.svelte';
 	import SideBar from '$lib/components/sideBar.svelte';
 	import { onMount } from 'svelte';
-	import { LoadingOutlined } from 'svelte-ant-design-icons';
 	export let data: any;
 	let filter = data?.filter?.data?.toLowerCase();
 	let categories = data?.category?.[0]?.selector || [];
@@ -115,7 +115,7 @@
 			</ul>
 			<a class="btn btn-error btn-lg text-white text-3xl inline-flex" href={nextPage}>
 				{#if isInfinityScrolling}
-					<LoadingOutlined class="animate-spin" /> Loading Next Page
+					<LoadingIcon class="animate-spin" /> Loading Next Page
 				{:else}
 					Next Page
 				{/if}

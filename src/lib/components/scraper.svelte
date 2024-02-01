@@ -3,13 +3,11 @@
 	import Input from './input.svelte';
 	export let name: string;
 	export let scraper: any = [];
-	import {
-		CloseOutlined,
-		MinusCircleOutlined,
-		PlusCircleOutlined,
-		PlusOutlined
-	} from 'svelte-ant-design-icons';
 	import { defaultTypes } from '$lib/util';
+	import PlusIcon from './icons/PlusIcon.svelte';
+	import MinusIcon from './icons/MinusIcon.svelte';
+	import MinusCircle from './icons/MinusCircle.svelte';
+	import PlusCircle from './icons/PlusCircle.svelte';
 	export let child: boolean = false;
 	$: expanded = false;
 	const addSelector = () => {
@@ -100,9 +98,9 @@
 						on:click|preventDefault={() => (expanded = !expanded)}
 					>
 						{#if expanded}
-							<MinusCircleOutlined size="20" />
+							<MinusCircle />
 						{:else}
-							<PlusCircleOutlined size="20" />
+							<PlusCircle />
 						{/if}
 					</button>
 				{/if}
@@ -151,10 +149,10 @@
 					</div>
 					<div class="flex gap-2.5">
 						<button on:click|preventDefault={() => addChild(i)} class="btn btn-primary">
-							<PlusOutlined size="20" />
+							<PlusIcon />
 						</button>
 						<button on:click|preventDefault={() => removeSelector(item)} class="btn btn-error">
-							<CloseOutlined size="20" />
+							<MinusIcon />
 						</button>
 					</div>
 				</div>
@@ -172,7 +170,7 @@
 		{#if !child}
 			<div class="mt-4">
 				<button on:click|preventDefault={() => addSelector()} class="btn btn-primary">
-					<PlusOutlined size="20" />
+					<PlusIcon />
 				</button>
 			</div>
 		{/if}

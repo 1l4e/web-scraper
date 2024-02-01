@@ -4,9 +4,11 @@
 	import Input from '$lib/components/input.svelte';
 	import Scraper from '$lib/components/scraper.svelte';
 	import { objectExtract } from '$lib';
-	import { CheckCircleFilled, DeleteFilled, PlusOutlined } from 'svelte-ant-design-icons';
 	import { toast } from 'svelte-sonner';
 	import { defaultTypes } from '$lib/util';
+	import CheckCircle from '$lib/components/icons/CheckCircle.svelte';
+	import MinusCircle from '$lib/components/icons/MinusCircle.svelte';
+	import PlusCircle from '$lib/components/icons/PlusCircle.svelte';
 
 	export let data: PageData;
 	const source = data.source;
@@ -72,7 +74,7 @@
 	<div class="flex justify-end w-full">
 		<div class="tooltip" data-tip="Delete source">
 			<label for="cfm_active" class="btn btn-info">
-				<CheckCircleFilled size={20} />
+				<CheckCircle />
 			</label>
 		</div>
 		<input type="checkbox" id="cfm_active" class="modal-toggle" />
@@ -94,7 +96,7 @@
 	<div class="flex justify-end w-full">
 		<div class="tooltip" data-tip="Delete source">
 			<label for="cfm_delete" class="btn btn-error">
-				<DeleteFilled size={20} />
+				<MinusCircle />
 			</label>
 		</div>
 		<input type="checkbox" id="cfm_delete" class="modal-toggle" />
@@ -175,7 +177,7 @@
 						type="button"
 						class="btn btn-primary"
 					>
-						<PlusOutlined size="20" />
+						<PlusCircle />
 					</button>
 					<span>{newName}</span>
 				</div>
