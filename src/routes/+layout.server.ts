@@ -9,6 +9,7 @@ export const load: any = async ({ locals }: any) => {
 		userId: null,
 		email: null,
 		sources,
+		filter
 	};
 	return {
 		userId: session.user.userId,
