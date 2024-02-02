@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Card from '$lib/components/card.svelte';
-	import Category from '$lib/components/category.svelte';
+	// import Category from '$lib/components/category.svelte';
 	import SideBar from '$lib/components/sideBar.svelte';
 	import { page } from '$app/stores';
+	import { fly } from 'svelte/transition';
 	export let data: any;
 	$: source = data?.sources?.find((source: any) => source.id === data.sourceId);
 	$: names = source?.scraper?.data?.home?.name;
@@ -13,10 +14,13 @@
 	{#if data?.sources}
 		<SideBar sources={data?.sources} />
 	{/if}
-	<Category />
+	<!-- <Category /> -->
 	<div class="flex flex-col gap-5 w-full">
 		{#each data?.categories as category, i (i)}
-			<div class="flex w-full gap-5 bg-slate-800 flex-col">
+			<div
+				class="flex w-full gap-5 bg-slate-800 flex-col"
+				transition:fly={{ y: 100, duration: 500 }}
+			>
 				<div class="flex mx-auto">
 					<div
 						class="flex justify-center items-center text-2xl bg-red-500 px-4 rounded-b-md py-2 text-white"
@@ -47,10 +51,3 @@
 		{/each}
 	</div>
 </div>
-<!-- {#if $page.state.selected} -->
-<!-- 	<div class="flex absolute top-0 left-0 w-screen h-screen justify-center items-center bg-black/80"> -->
-<!-- 		<div class="flex flex-col bg-black"> -->
-<!-- 			<ParentPage data={$page.state.selected} /> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- {/if} -->

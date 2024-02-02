@@ -17,16 +17,19 @@
 			id="player"
 			class="bg-white w-full h-[100vh] aspect-video relative flex shrink-0"
 		>
-			{#if episodeUrl.type === 'm3u8'}
-				<VideoComponent source={episodeUrl.src} />
-			{:else}
+			{#if episodeUrl.type === 'embed'}
 				<iframe
+					data-portal="player"
 					title="Video"
 					sandbox="allow-same-origin allow-scripts"
 					class="absolute top-0 left-0 w-full h-full"
 					src={episodeUrl.src}
 					allowfullscreen
 				></iframe>
+			{:else}
+				<VideoComponent source={episodeUrl.src} />
+				<!-- {:else if episodeUrl.type === 'html'} -->
+				<!-- 	@html(episodeUrl.src) -->
 			{/if}
 		</div>
 		<div class="flex flex-col gap-6"></div>

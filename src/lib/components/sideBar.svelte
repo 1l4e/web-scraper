@@ -2,8 +2,11 @@
 	import type { Source } from '@prisma/client';
 	export let sources: Source[];
 	import { page } from '$app/stores';
+	import Category from './category.svelte';
+	import { fade, fly } from 'svelte/transition';
 	let keys = $page.url.searchParams.get('keyword') || '';
 	$: sourceId = $page.data.sourceId;
+	let hide = false;
 </script>
 
 <div data-portal="sidebar" class="flex w-full">
@@ -38,6 +41,29 @@
 					</a>
 				</li>
 			{/each}
+			{#if $page.data.categoryData}
+				<li class="flex rounded-lg overflow-hidden duration-150 hover:scale-105">
+					<button
+						data-portal="source"
+						data-type="btn"
+						on:click|preventDefault={() => {
+							hide = !hide;
+						}}
+						class="btn text-4xl btn-secondary flex h-[150px] w-[150px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
+					>
+						<span
+							class="portal-key uppercase text-5xl bg-secondary text-center w-12 absolute top-0 left-0"
+							>{sources.length + 1}</span
+						>
+						Thể loại
+					</button>
+				</li>
+			{/if}
 		</ul>
 	</div>
 </div>
+{#if hide}
+	<div transition:fly={{ x: -100, duration: 500 }}>
+		<Category />
+	</div>
+{/if}

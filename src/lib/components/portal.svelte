@@ -5,12 +5,7 @@
 	$: search = false;
 	$: keys = '';
 	let timeoutId: any;
-	function handleKeyPress(e: KeyboardEvent) {
-		const page = document.querySelector('[data-portal="page"]');
-		timeoutId && clearTimeout(timeoutId);
-		if (!page) return;
-		const isNumber = /^[0-9]$/i.test(e.key);
-		const isLetter = /^[a-z]$/i.test(e.key);
+	function handleFullScreen(e: KeyboardEvent) {
 		if (!keys && e.key === 'f') {
 			if (document.fullscreenElement) {
 				// If already in fullscreen, exit fullscreen
@@ -55,12 +50,38 @@
 			}
 			return;
 		}
+	}
+
+	function handleVideoPlayer(e: KeyboardEvent) {
+		// const video = document.querySelector('');
+		// const video = document.querySelector('[data-portal="player"]');
+		// if (!video) return;
+		// if (e.key === 'p') {
+		// 	if (video.paused) {
+		// 		video.play();
+		// 	} else {
+		// 		video.pause();
+		// 	}
+		// }
+	}
+	function handleKeyPress(e: KeyboardEvent) {
+		const page = document.querySelector('[data-portal="page"]');
+		timeoutId && clearTimeout(timeoutId);
+		if (!page) return;
+		const isNumber = /^[0-9]$/i.test(e.key);
+		const isLetter = /^[a-z]$/i.test(e.key);
+		if (e.key === 'Escape') {
+			keys = '';
+			return;
+		}
 		if (isNumber || isLetter) {
 			if ((isNumber && /[a-z]/i.test(keys)) || (isLetter && /[0-9]/.test(keys))) {
 				keys = '';
 			}
 			keys += e.key;
 		}
+		handleVideoPlayer(e);
+		handleFullScreen(e);
 		timeoutId = setTimeout(() => {
 			const allCards = document.querySelectorAll(
 				isNumber ? '[data-portal="card"]' : '[data-portal="source"]'
@@ -69,8 +90,14 @@
 				if (card.getAttribute('data-key') === keys) {
 					const link = card.getAttribute('href');
 					if (link) {
-						goto(link);
 						keys = '';
+						goto(link);
+					} else {
+						const type = card.getAttribute('data-type');
+						if (type) {
+							keys = '';
+							(card as HTMLElement).click();
+						}
 					}
 					return; // Break out of the loop
 				}
@@ -80,7 +107,6 @@
 				if (episode.getAttribute('data-key') === keys) {
 					const link = episode.getAttribute('href');
 					if (link) {
-						console.log('Found');
 						goto(link);
 						keys = '';
 					}
@@ -88,7 +114,7 @@
 				}
 			}
 			keys = '';
-		}, 2000);
+		}, 1000);
 		return () => {
 			cleanup();
 		};
@@ -146,9 +172,6 @@
 	});
 	onMount(() => {
 		window.addEventListener('scroll', updateCardKey);
-		// updateCardKey();
-		// updateSourceKey();
-		// updateEpisodeKey();
 		return () => {
 			window.removeEventListener('scroll', updateCardKey);
 		};

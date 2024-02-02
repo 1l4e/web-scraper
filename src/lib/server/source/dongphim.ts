@@ -3,7 +3,6 @@ import axios from "axios"
 export async function dp(server: any, url: string) {
     const servers: any = []
     const tests: any = []
-    console.log(server)
     try {
         server.forEach((item: any) => {
             if (item.type === 'embed') {
@@ -11,12 +10,20 @@ export async function dp(server: any, url: string) {
                 tests.push({ src: item.dongphim, type: "embed" })
             }
             if (item.type === 'm3u8') {
-                servers.push({ src: url + "/api/proxy4?url=" + item.dongphim, type: "m3u8" })
+                if (item.dongphim.includes('streamc.xyz')) {
+                    servers.push({ src: url + "/api/proxy5?url=" + item.dongphim, type: "m3u8" })
+                }
+                else {
+                    servers.push({ src: url + "/api/proxy4?url=" + item.dongphim, type: "m3u8" })
+                }
                 // servers.push({ src: url + '/api/proxy3?url=' + item.dongphim, type: "m3u8" })
             }
         })
         for (let i = 0; i < tests.length; i++) {
             if (tests[i].src.includes('https://hcplayer')) {
+                // const proxy = url + "/api/proxy4?url="
+                // servers.push({ src: tests[i].src, type: "embed" })
+                // servers.push({ src: url + "/api/proxy4?url=" + tests[i].src + "&referer=https://dongphim.co/" + "&cookie=fireplayer_player=g1arohbd961eekpac2q45m8rfq", type: "html" })
                 const urr = new URL(tests[i].src)
                 const id = urr.pathname.split("/")[2]
                 const query = '?data=' + id + '&do=getVideo'
@@ -45,7 +52,7 @@ export async function dp(server: any, url: string) {
                         // Find all matches in the M3U content
                         const matches = raw.match(urlPattern);
                         if (matches) {
-                            servers.push({ src: url + "/api/proxy4?url=" + matches[0], type: "m3u8" })
+                            servers.push({ src: url + "/api/proxy5?url=" + matches[0], type: "m3u8" })
                         }
                     }
                 }
@@ -63,7 +70,6 @@ export async function dp(server: any, url: string) {
                 return 0;
             }
         });
-        console.log(servers)
         return servers
     } catch (error: any) {
         console.log(error.message)

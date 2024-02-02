@@ -1,3 +1,4 @@
+
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import axios from 'axios';
@@ -27,7 +28,23 @@ export const GET: RequestHandler = async ({ url }) => {
         const res = await axios.get(link, {
             headers
         })
-        return new Response(res.data, {
+        const data = res.data;
+        const lines = data.split('\n');
+        let newFile = ''
+        const proxy = url.origin + "/api/proxy4?url="
+        const prefix = link.toString().split('/').slice(0, -1).join('/')
+        for (let j = 0; j < lines.length; j++) {
+            if (lines[j].startsWith('https://')) {
+                newFile += proxy + lines[j] + '\n'
+            }
+            else if (!lines[j].startsWith('#')) {
+                newFile += proxy + prefix + "/" + lines[j] + '\n'
+            }
+            else {
+                newFile += lines[j] + '\n'
+            }
+        }
+        return new Response(newFile, {
             status: 200,
             // headers:{
             //     'Content-Type': 'text/html'

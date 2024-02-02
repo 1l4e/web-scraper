@@ -12,27 +12,27 @@
 		player = videojs('movie', {
 			autoplay: true
 		});
-		// player.httpSourceSelector({
-		// 	withCredentials: false, // You can set other options here
-		// 	beforeRequest: (options, player) => {
-		// 		// Modify headers before each request
-		// 		options.headers['Your-Header-Name'] = 'Your-Header-Value';
-		// 		return options;
-		// 	}
-		// });
 	});
 	onDestroy(() => {
 		if (player) player.dispose();
 	});
+	let mediaType =
+		type === 'm3u8'
+			? 'application/x-mpegURL'
+			: type === 'blob'
+				? 'application/octet-stream'
+				: 'video/mp4';
 </script>
 
 <video
+	data-portal="player"
 	id="movie"
 	class="video-js vjs-default-skin absolute top-0 left-0 w-full h-full"
 	controls
 	autoplay
 	preload="auto"
+	crossorigin="use-credentials"
 >
 	<track kind="captions" />
-	<source src={source} type={type === 'm3u8' ? 'application/x-mpegURL' : 'video/mp4'} />
+	<source src={source} type={mediaType} />
 </video>
