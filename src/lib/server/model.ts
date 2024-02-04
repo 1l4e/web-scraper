@@ -1,6 +1,17 @@
 import prisma from "./prisma"
 
 
+export const activeOneSource = async ({ sourceId, active }: { sourceId: string, active: boolean }) => {
+    await prisma.source.update({
+        where: {
+            id: sourceId
+        },
+        data: {
+            active
+        }
+    })
+}
+
 export const updateOneSource = async ({ sourceId, name, image, url, data }: CreateOneObject & { sourceId: string }) => {
     await prisma.source.update({
         where: {
@@ -87,7 +98,11 @@ export const findManySources = async (active?: boolean) => {
 }
 
 export const findManyScraper = async () => {
-    return await prisma.scraper.findMany()
+    return await prisma.scraper.findMany({
+        orderBy: {
+            id: 'asc'
+        }
+    })
 }
 
 export const findManyCategories = ({ sourceId, page }: { sourceId?: string, page?: string }) => {

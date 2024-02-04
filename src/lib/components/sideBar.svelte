@@ -2,34 +2,68 @@
 	import type { Source } from '@prisma/client';
 	export let sources: Source[];
 	import { page } from '$app/stores';
+	import Category from './category.svelte';
+	import { fade, fly } from 'svelte/transition';
+	let keys = $page.url.searchParams.get('keyword') || '';
 	$: sourceId = $page.data.sourceId;
+	let hide = false;
 </script>
 
-<div class="fixed bottom-0 w-full">
+<div data-portal="sidebar" class="flex w-full">
 	<div
-		class="container rounded-t-lg mx-auto flex justify-center flex-row bg-base-100 h-[100px] gap-5 p-5 z-10 items-center"
+		class="container rounded-t-lg mx-auto flex justify-center flex-col bg-transparent gap-5 p-5 z-10 items-center"
 	>
-		<ul class="flex relative gap-6">
+		<form action="/search" class="flex mx-auto justify-center w-full lg:w-1/2 gap-4">
+			<input type="hidden" name="source" bind:value={sourceId} />
+			<input
+				name="keyword"
+				bind:value={keys}
+				placeholder="Search"
+				autocomplete="off"
+				type="text"
+				class="input input-bordered input-lg input-primary lg:w-1/2"
+			/>
+			<button type="submit" class="btn btn-primary btn-lg text-white">Search</button>
+		</form>
+		<ul class="flex relative gap-6 w-full mx-auto justify-center">
 			{#each sources as item, i (i)}
-				<li class="flex rounded-lg overflow-hidden">
+				<li class="flex rounded-lg overflow-hidden duration-150 hover:scale-105">
 					<a
 						data-portal="source"
 						href="/?source={item.id}"
-						class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
+						class="btn btn-secondary flex h-[150px] w-[150px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
 					>
-						<span class="portal-key uppercase text-5xl bg-secondary text-center w-12">{i + 1}</span>
+						<span
+							class="portal-key uppercase text-5xl bg-secondary text-center w-12 absolute top-0 left-0"
+							>{i + 1}</span
+						>
 						<img src={item.image} alt={item.name} class="h-[30px] w-full object-cover" />
 					</a>
 				</li>
 			{/each}
-			<a
-				data-portal="source"
-				href="/search?source={sourceId}"
-				class="flex h-[50px] items-center justify-center rounded-sm bg-primary text-white relative pr-4"
-			>
-				<span class="portal-key text-5xl bg-secondary text-center w-12">s</span>
-				Search
-			</a>
+			{#if $page.data.categoryData}
+				<li class="flex rounded-lg overflow-hidden duration-150 hover:scale-105">
+					<button
+						data-portal="source"
+						data-type="btn"
+						on:click|preventDefault={() => {
+							hide = !hide;
+						}}
+						class="btn text-4xl btn-secondary flex h-[150px] w-[150px] items-center justify-center rounded-sm bg-primary text-white relative overflow-hidden"
+					>
+						<span
+							class="portal-key uppercase text-5xl bg-secondary text-center w-12 absolute top-0 left-0"
+							>{sources.length + 1}</span
+						>
+						Thể loại
+					</button>
+				</li>
+			{/if}
 		</ul>
 	</div>
 </div>
+{#if hide}
+	<div transition:fly={{ x: -100, duration: 500 }}>
+		<Category />
+	</div>
+{/if}

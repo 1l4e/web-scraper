@@ -5,18 +5,83 @@
 	$: search = false;
 	$: keys = '';
 	let timeoutId: any;
+	function handleFullScreen(e: KeyboardEvent) {
+		if (!keys && e.key === 'f') {
+			if (document.fullscreenElement) {
+				// If already in fullscreen, exit fullscreen
+				if (document.exitFullscreen) {
+					document.exitFullscreen();
+					/* @ts-ignore */
+				} else if (document.mozCancelFullScreen) {
+					// Firefox
+					/* @ts-ignore */
+					document.mozCancelFullScreen();
+					/* @ts-ignore */
+				} else if (document.webkitExitFullscreen) {
+					// Chrome, Safari and Opera
+					/* @ts-ignore */
+					document.webkitExitFullscreen();
+					/* @ts-ignore */
+				} else if (document.msExitFullscreen) {
+					// IE/Edge
+					/* @ts-ignore */
+					document.msExitFullscreen();
+				}
+			} else {
+				// If not in fullscreen, request fullscreen
+				if (document.documentElement.requestFullscreen) {
+					document.documentElement.requestFullscreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.mozRequestFullScreen) {
+					// Firefox
+					/* @ts-ignore */
+					document.documentElement.mozRequestFullScreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.webkitRequestFullscreen) {
+					// Chrome, Safari and Opera
+					/* @ts-ignore */
+					document.documentElement.webkitRequestFullscreen();
+					/* @ts-ignore */
+				} else if (document.documentElement.msRequestFullscreen) {
+					// IE/Edge
+					/* @ts-ignore */
+					document.documentElement.msRequestFullscreen();
+				}
+			}
+			return;
+		}
+	}
+
+	function handleVideoPlayer(e: KeyboardEvent) {
+		// const video = document.querySelector('');
+		// const video = document.querySelector('[data-portal="player"]');
+		// if (!video) return;
+		// if (e.key === 'p') {
+		// 	if (video.paused) {
+		// 		video.play();
+		// 	} else {
+		// 		video.pause();
+		// 	}
+		// }
+	}
 	function handleKeyPress(e: KeyboardEvent) {
 		const page = document.querySelector('[data-portal="page"]');
 		timeoutId && clearTimeout(timeoutId);
 		if (!page) return;
 		const isNumber = /^[0-9]$/i.test(e.key);
 		const isLetter = /^[a-z]$/i.test(e.key);
+		if (e.key === 'Escape') {
+			keys = '';
+			return;
+		}
 		if (isNumber || isLetter) {
 			if ((isNumber && /[a-z]/i.test(keys)) || (isLetter && /[0-9]/.test(keys))) {
 				keys = '';
 			}
 			keys += e.key;
 		}
+		handleVideoPlayer(e);
+		handleFullScreen(e);
 		timeoutId = setTimeout(() => {
 			const allCards = document.querySelectorAll(
 				isNumber ? '[data-portal="card"]' : '[data-portal="source"]'
@@ -25,8 +90,14 @@
 				if (card.getAttribute('data-key') === keys) {
 					const link = card.getAttribute('href');
 					if (link) {
-						goto(link);
 						keys = '';
+						goto(link);
+					} else {
+						const type = card.getAttribute('data-type');
+						if (type) {
+							keys = '';
+							(card as HTMLElement).click();
+						}
 					}
 					return; // Break out of the loop
 				}
@@ -36,7 +107,6 @@
 				if (episode.getAttribute('data-key') === keys) {
 					const link = episode.getAttribute('href');
 					if (link) {
-						console.log('Found');
 						goto(link);
 						keys = '';
 					}
@@ -44,7 +114,7 @@
 				}
 			}
 			keys = '';
-		}, 2000);
+		}, 1000);
 		return () => {
 			cleanup();
 		};
@@ -102,9 +172,6 @@
 	});
 	onMount(() => {
 		window.addEventListener('scroll', updateCardKey);
-		updateCardKey();
-		updateSourceKey();
-		updateEpisodeKey();
 		return () => {
 			window.removeEventListener('scroll', updateCardKey);
 		};
@@ -113,7 +180,7 @@
 
 {#if keys && !search}
 	<div
-		class="flex fixed top-5 left-5 min-w-32 h-40 bg-black justify-center items-center text-7xl py-2 z-[51] rounded-lg"
+		class="flex fixed top-5 left-5 min-w-32 h-40 bg-red-500 justify-center items-center text-7xl py-2 z-[51] rounded-lg text-shadow"
 		transition:fade
 	>
 		{keys.toUpperCase()}

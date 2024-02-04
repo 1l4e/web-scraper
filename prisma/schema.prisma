@@ -6,9 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  // directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model User {
@@ -48,16 +48,18 @@ model Scraper {
 }
 
 model Source {
-  id         String  @id @default(cuid())
+  id         String   @id @default(cuid())
   name       String
   url        String
   image      String?
   Manga      Manga[]
-  active     Boolean @default(false)
-  scraper    Scraper @relation(fields: [scraper_id], references: [id], onDelete: Cascade)
+  active     Boolean  @default(false)
+  scraper    Scraper  @relation(fields: [scraper_id], references: [id], onDelete: Cascade)
   scraper_id String
   cookie     String?
   csrf       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
 }
 
 model Manga {
@@ -96,6 +98,16 @@ model Bookmark {
   user    User      @relation(references: [id], fields: [user_id], onDelete: Cascade)
   user_id String
   chapter Chapter[]
+}
+
+model Filter {
+  id        String   @id @default(cuid())
+  name      String
+  data      String?
+  type      String?
+  active    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
 }
 
 enum ROLE {

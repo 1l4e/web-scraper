@@ -4,6 +4,7 @@ import axios from "axios";
 import type { PageServerLoad } from "./$types";
 import { animetvnProxy } from "$lib/server/source/animetvn";
 import { phimTm } from "$lib/server/source/phimtm";
+import { dp } from "$lib/server/source/dongphim";
 
 export const load: PageServerLoad = async ({ url, params }) => {
 	const searchParams = url.searchParams
@@ -15,11 +16,12 @@ export const load: PageServerLoad = async ({ url, params }) => {
 	const { episode, sourceData }: any = await getChild(source, episodeId)
 
 	let servers: any = [];
+	let reverse = false;
 
 	const serverUrl = url.origin + url.pathname + '?source=' + source;
 	if (episode[0]?.server && episode[0].server.length > 0) {
 		const server = episode[0].server[0];
-		const { xoilac,phimtm, animetvn, post, nume } = server;
+		const { dongphim, xoilac, phimtm, animetvn, post, nume } = server;
 		let postData: any
 		postData = {
 			action: 'doo_player_ajax',
@@ -27,7 +29,7 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			nume,
 			type: 'tv'
 		}
-		if (xoilac){
+		if (xoilac) {
 			servers.push(xoilac)
 		}
 		const uurl = sourceData?.scraper.data?.post.selector[0];
@@ -38,19 +40,23 @@ export const load: PageServerLoad = async ({ url, params }) => {
 			else if (phimtm) {
 				servers = await phimTm(server, sourceData, url.origin)
 			}
+			else if (dongphim) {
+				const dpServers = episode[0].server;
+				servers = await dp(dpServers,url.origin)
+				reverse = true
+			}
 			else {
-				const res = await axios.post(url.origin + '/api/proxy', { url: uurl, postData, referer: sourceData.url });
+				const requestData = { url: uurl, postData, referer: sourceData.url, type: "phimmoi" }
+				const res = await axios.post(url.origin + '/api/proxy', requestData);
 				if (res.status !== 200) {
 					return
 				}
 				const embedData = res.data;
 				const { embed_url } = embedData;
-				servers.push(embed_url)
+				servers.push({ src: embed_url, type: "embed" })
 			}
 		} catch (error: any) {
-			// Control cookie if fail then get another cookie and csrf
-			console.log(error.message)
-			servers.push({})
+			servers.push({ src: "", type: "embed" })
 		}
 	}
 
@@ -60,6 +66,8 @@ export const load: PageServerLoad = async ({ url, params }) => {
 		episode,
 		servers,
 		serverUrl,
+		reverse,
+		title: sourceData?.name?.toUpperCase()
 	}
 
 }

@@ -1,6 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	export let menu: any;
 	export let data: any;
+	let logo = '';
+	$: source = $page.url.searchParams.get('source');
+	$: if (source) {
+		logo = $page.data.sources.find((s: any) => s.id === source)?.image || '';
+	}
 </script>
 
 <div class="navbar bg-base-100 container mx-auto drop-shadow-md z-50 rounded-b-lg">
@@ -44,7 +50,10 @@
 				{/each}
 			</ul>
 		</div>
-		<a href="/" class="btn btn-ghost text-xl">Mangasi</a>
+		<a href={source === null ? '/' : '/?source=' + source} class="btn btn-ghost text-xl">
+			<!-- <a href="/?source={source}" class="btn btn-ghost text-xl"> -->
+			<img src={logo} alt="Chamthoi" class="w-auto h-10" />
+		</a>
 	</div>
 	<div class="navbar-center hidden lg:flex">
 		<ul class="menu menu-horizontal px-1">

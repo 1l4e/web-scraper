@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_PRISMA_URL: 'postgresql://postgres:superStrongPa$$word123@db:5432/postgres'
+    ports:
+      - 3000:3000
+    networks:
+      - app-network
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: superStrongPa$$word123
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+
+volumes:
+  db-data:

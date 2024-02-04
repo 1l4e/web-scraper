@@ -1,6 +1,6 @@
 import { redirect, type Actions, fail } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import { deleteOneSource, findManyScraper, findOneSource, updateOneSource } from "$lib/server/model";
+import { activeOneSource, deleteOneSource, findManyScraper, findOneSource, updateOneSource } from "$lib/server/model";
 import { formDataToObject } from "$lib";
 
 
@@ -78,6 +78,7 @@ export const actions: Actions = {
 	delete: async ({ locals, params }) => {
 		const session = await locals.auth.validate();
 		if (!session) throw redirect(302, "/login");
+		if (session.user.role !== "ADMIN") throw redirect(302, "/");
 		const sourceId = params.sourceId
 		if (!sourceId) {
 			return fail(400, {
@@ -99,6 +100,31 @@ export const actions: Actions = {
 
 		}
 
+		redirect(302, "/dashboard/source")
+	},
+	active: async ({ locals, params, request }) => {
+		const session = await locals.auth.validate();
+		if (!session) throw redirect(302, "/login");
+		if (session.user.role !== "ADMIN") throw redirect(302, "/");
+		const sourceId = params.sourceId
+		const formData = await request.formData()
+		const active = formData.get('active') === 'true' ? true : false
+		if (!sourceId) {
+			return fail(400, {
+				message: "No Source Id"
+			})
+		}
+		try {
+			await activeOneSource({
+				sourceId,
+				active
+			})
+		} catch (error:any) {
+			console.log(error.message)
+			return fail(500, {
+				message: "Something wrong"
+			})
+		}
 		redirect(302, "/dashboard/source")
 	}
 }

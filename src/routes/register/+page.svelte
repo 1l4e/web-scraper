@@ -30,6 +30,18 @@
 				class="input input-bordered input-secondary w-full"
 			/>
 		</label>
+		<label class="form-control w-full">
+			<div class="label">
+				<span class="label-text">Referer</span>
+			</div>
+			<input
+				name="referer"
+				autocomplete="off"
+				type="password"
+				placeholder="referer"
+				class="input input-bordered input-secondary w-full"
+			/>
+		</label>
 		<button class="btn btn-secondary mt-10">Submit</button>
 	</form>
 	<a class="btn btn-ghosted mt-10" href="/login">Already have account,Sign in</a>
@@ -37,4 +49,3 @@
 		<p class="text-red-500">{form.message}</p>
 	{/if}
 </div>
-

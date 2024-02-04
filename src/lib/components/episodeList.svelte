@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { hexUrl } from '$lib/util';
 	export let sourceId: any;
+	export let revert: boolean;
 	export let parent: any;
 </script>
 
@@ -11,16 +12,15 @@
 				<li class="text-4xl">{key.toUpperCase()}</li>
 				<ul class="flex flex-row gap-6 flex-wrap">
 					{#if value && Array.isArray(value)}
-						{#each value as episode, i (i)}
+						{#each revert ? value.reverse() : value as episode, i (i)}
 							<li class="flex rounded-lg overflow-hidden">
 								{#if episode?.link}
 									<a
 										data-portal="episode"
-										class="flex justify-between flex-col text-3xl relative bg-black"
+										class="flex btn btn-error h-auto w-auto justify-between flex-col text-3xl relative visited:bg-slate-500"
 										href={`/episode/${hexUrl(episode?.link)}?source=${sourceId}`}
 									>
-										<span
-											class="portal-key top-0 left-0 text-5xl text-white w-full bg-slate-500 text-center"
+										<span class="portal-key top-0 left-0 text-5xl text-white w-full text-center"
 											>{i + 1}</span
 										>
 										<span class="px-4 py-2">
